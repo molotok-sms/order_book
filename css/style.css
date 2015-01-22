@@ -1,0 +1,173 @@
+
+/*
+Цветовая схема ( http://colorscheme.ru/#3q11Tw0w0w0w0 ):
+
+
+*/
+
+
+/* === Служебное ================================================================= */
+
+@media print { .no_print { display: none; } }
+@media screen { .no_screen { display: none; } }
+
+.padding10
+{
+	padding: 5px 10px;
+}
+
+.padding30
+{
+	padding: 20px 30px;
+}
+
+
+/* === Общая разметка ================================================================= */
+
+body
+{
+	background-color: #0776A0;
+	font-size: 12pt;
+	margin: 0px;
+	
+}
+
+a
+{
+	color: #024C68;
+	
+}
+
+a img
+{
+	border: none;
+	
+}
+
+
+.main_frame
+{
+	margin: auto;
+	width: 1000px;
+	
+}
+
+
+/* === Заголовок ================================================================= */
+
+.header_frame
+{
+	background-color: #0776A0;
+	margin: 0px;
+	padding: 20px 0px 0px 0px;
+	position: fixed;
+	width: 100%;
+	
+}
+
+
+.header_frame > .header
+{
+	background-color: white;
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
+	margin: auto;
+	width: 1000px;
+	
+}
+
+
+.header_frame > .header > .title
+{
+	font-size: 3em;
+	padding: 20px 30px;
+	
+}
+
+
+.header_frame > .header > .menu
+{
+	border-top: 1px solid #0776A0;
+	margin: 0px 5px;
+	
+}
+
+.header_frame > .header > .menu > ul
+{
+	font-family: Verdana;
+	font-size: 0.8em;
+	margin: 0px;
+	padding: 0px 10px;
+	
+}
+
+.header_frame > .header > .menu > ul > li
+{
+	cursor: pointer;
+	float: left;
+	list-style: none;
+	margin: 5px;
+	padding: 10px 20px;
+	
+}
+
+.header_frame > .header > .menu > ul > li.highlight
+{
+	background-color: #00B945;
+	border-radius: 2px;
+	box-shadow:
+		0 1px 4px rgba(0, 0, 0, .3),
+		-23px 0 20px -23px rgba(0, 0, 0, .8),
+		23px 0 20px -23px rgba(0, 0, 0, .8),
+		0 0 40px rgba(0, 0, 0, .1) inset;
+	color: white;
+	font-weight: bold;
+	
+}
+
+.header_frame > .header > .menu:after
+{
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+	
+}
+
+.header_frame > .header > .menu > .login
+{
+	background: url(../images/businessman_24.png) left no-repeat;
+	float: right;
+	margin: 5px;
+	padding: 10px 7px 10px 27px;
+	
+}
+
+
+.header_spacer
+{
+	height: 190px;
+	
+}
+
+
+.footer
+{
+	margin: 20px auto;
+	text-align: center;
+	width: 1000px;
+	
+}
+
+
+/* === Заказы ================================================================= */
+
+.orders .item
+{
+	background-color: white;
+	/*box-shadow: 5px 5px rgba(0, 0, 0, 0.2);*/
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+	margin-bottom: 20px;
+	
+}
+
