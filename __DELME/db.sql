@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.20, for Win32 (x86)
 --
--- Host: localhost    Database: orders
+-- Host: localhost    Database: order_book
 -- ------------------------------------------------------
 -- Server version	5.6.20
 
@@ -14,6 +14,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `order_book`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `order_book` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `order_book`;
 
 --
 -- Table structure for table `orders`
@@ -66,7 +74,7 @@ CREATE TABLE `users` (
   `update_datetime` int(10) unsigned NOT NULL,
   `last_datetime` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,6 +83,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich',1,0,0.00,'+3:00',1422012749,1422012749,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -87,4 +96,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-22 22:44:46
+-- Dump completed on 2015-01-23 16:41:44

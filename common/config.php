@@ -7,7 +7,7 @@
 // Кодовая страница сайта
 define('CODEPAGE', 'utf-8');
 // Домен сайта
-define('SITE_DOMAIN', 'orders');
+define('SITE_DOMAIN', 'order_book');
 
 // Размещение сайта в поддиректории корневой директории веб-сервера
 define('WWW', '');
@@ -20,8 +20,8 @@ define('WWW', '');
 
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
-define('DB_NAME', 'orders');
-define('DB_USER', 'orders');
+define('DB_NAME', 'order_book');
+define('DB_USER', 'order_book');
 define('DB_PASS', 'a6WyYSvq5y');
 define('DB_PREFIX', '');
 define('DB_CODEPAGE', 'utf8');
