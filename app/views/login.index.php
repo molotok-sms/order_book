@@ -127,7 +127,7 @@ $(document).ready(function ()
 		<p><input id="pass" placeholder="Пароль" name="pass" type="password" value=""></p>
 		<div class="action">
 			<input class="button" type="submit" value="Войти" />
-			<a>Регистрация</a>
+			<a href="<?=WWW?>/register">Регистрация</a>
 		</div>
 		<div class="error_string state-error" <?php if ($error_string) { ?>style="display: none;"<?php } ?>><?=$error_string?></div>
 	</div>

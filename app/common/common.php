@@ -10,7 +10,7 @@ require_once('config.php');
 date_default_timezone_set('UTC');
 
 // Подключение оболочки Базы Данных
-require_once(ROOT . '/common/db.php');
+require_once(APP . '/common/db.php');
 // Подключение к Базе Данных
 db_connect('host=' . DB_HOST . ' port=' . DB_PORT . ' user=' . DB_USER . ' password=' . DB_PASS . ' dbname=' . DB_NAME);
 // Настройка кодировки подключения к Базе Данных
@@ -21,9 +21,9 @@ header('Content-type: text/html; charset=' . CODEPAGE);
 
 
 // Подключение библиотеки вспомогательных функций
-require_once(ROOT . '/common/funcs.php');
+require_once(APP . '/common/funcs.php');
 // Подключение библиотеки функций "users"
-require_once(ROOT . '/common/funcs.users.php');
+require_once(APP . '/common/funcs.users.php');
 
 
 // Выход из пользователя

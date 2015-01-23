@@ -11,7 +11,7 @@ define('SITE_DOMAIN', 'order_book');
 
 // Размещение сайта в поддиректории корневой директории веб-сервера
 define('WWW', '');
-//define('WWW', '/test');
+//define('WWW', '/subdir');
 
 
 //
@@ -35,9 +35,11 @@ define('DB_CODEPAGE', 'utf8');
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . WWW);
 
 // Настройка вспомогательных директорий
+define('APP', ROOT . '/app');
+
+// Настройка вспомогательных директорий
 define('LOG', ROOT . '/log');
-define('TMP', ROOT . '/tmp');
-define('IMG', ROOT . '/images');
+define('IMG', ROOT . '/public/images');
 define('IMG_WWW', WWW . '/images');
 
 
