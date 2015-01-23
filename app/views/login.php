@@ -1,45 +1,7 @@
 <?php
 
-// Подключение движка сайта
-require_once('../common/common.php');
-
-// Инициализация переменной
-$error_string = '';
-
-
-// Если аутентификация пользователя успешна
-if (users_login())
-{
-	// Если это AJAX-запрос
-	if (isset($_REQUEST['ajax']))
-	{
-		// Завершаем выполнение с выводом команды перенаправления
-		die('redirect');
-		
-	}
-	else
-	{
-		// Перенаправляем на Главную страницу сайта
-		redirect();
-		
-	}
-	
-}
-else
-{
-	// Устанавливаем текст ошибки
-	$error_string = 'Неправильное имя пользователя или пароль';
-	
-	// Если это AJAX-запрос, то завершаем выполнение с выводом ошибки
-	if (isset($_REQUEST['ajax'])) die($error_string);
-	
-}
-
-
 // Подключение заголовочной части сайта
-require_once('../common/header.php');
-
-
+require_once('../app/common/header.php');
 
 ?>
 <script language="javascript">
@@ -120,7 +82,7 @@ $(document).ready(function ()
 });
 
 </script>
-<form action="https://<?=SITE_DOMAIN?>/<?=WWW?>/login/" class="login" method="post">
+<form action="https://<?=(SITE_DOMAIN . WWW)?>/login/" class="login" method="post">
 	<h1 class="header">Вход на сайт</h1>
 	<div class="content">
 		<p><input autofocus id="login" placeholder="Имя пользователя" name="login" value=""></p>
@@ -129,6 +91,6 @@ $(document).ready(function ()
 			<input class="button" type="submit" value="Войти" />
 			<a href="<?=WWW?>/register">Регистрация</a>
 		</div>
-		<div class="error_string state-error" <?php if ($error_string) { ?>style="display: none;"<?php } ?>><?=$error_string?></div>
+		<div class="error_string state-error" <?php if (!$_data['error']) { ?>style="display: none;"<?php } ?>><?=$_data['error']?></div>
 	</div>
 </form>

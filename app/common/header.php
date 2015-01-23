@@ -7,11 +7,12 @@ require_once('common.php');
 <!DOCTYPE html>
 <html>
 <head>
-<link href="<?=WWW?>/css/style.css" rel="stylesheet" type="text/css" />
+<link href="<?=WWW?>/public/images/favicon.ico" rel="icon" type="image/x-icon" />
+<link href="<?=WWW?>/public/css/style.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="content-type" content="text/html;charset=<?=CODEPAGE?>">
-<script language="javascript" src="<?=WWW?>/js/jquery.min.js"></script>
-<script language="javascript" src="<?=WWW?>/js/jquery-ui.min.js"></script>
-<script language="javascript" src="<?=WWW?>/js/jquery.blockUI.js"></script>
+<script language="javascript" src="<?=WWW?>/public/js/jquery.min.js"></script>
+<script language="javascript" src="<?=WWW?>/public/js/jquery-ui.min.js"></script>
+<script language="javascript" src="<?=WWW?>/public/js/jquery.blockUI.js"></script>
 <title>Система размещения заказов</title>
 </head>
 <body>

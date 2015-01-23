@@ -36,11 +36,7 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT'] . WWW);
 
 // Настройка вспомогательных директорий
 define('APP', ROOT . '/app');
-
-// Настройка вспомогательных директорий
 define('LOG', ROOT . '/log');
-define('IMG', ROOT . '/public/images');
-define('IMG_WWW', WWW . '/images');
 
 
 ?>

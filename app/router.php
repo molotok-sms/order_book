@@ -5,13 +5,14 @@ require_once('common/common.php');
 
 // Получение входных параметров
 $url = isset($_REQUEST['_url']) ? $_REQUEST['_url'] : '/';
+//print_log('debug', 'URL: ' . $url); // TODO
 
 
 // Удаляем имя домена из адреса (при наличии О_о)
 $url = preg_replace('#^http[s]{0,1}://' .  SITE_DOMAIN . WWW . '/#i', '/', $url);
 // Разбор входных параметров по разделителю (слэш)
 $params = preg_split('#/+#', $url, -1, PREG_SPLIT_NO_EMPTY);
-var_dump_log($params);
+//print_log('debug', 'PARAMS:'); var_dump_log($params); // TODO
 
 
 // Инициализация переменных
@@ -79,7 +80,7 @@ if (!$_view || !file_exists(APP . '/views/' . $_model . ($_view != 'index' ? '.'
 }
 
 // Если указан несуществующий контроллер, подстановка значения по умолчанию
-if (!$_controller || !file_exists(APP . '/controllers/' . $_model  . '.' . $_controller . '.php'))
+if (!$_controller || !file_exists(APP . '/controllers/' . $_model  . ($_controller ? '.' . $_controller : '') . '.php'))
 {
 	// Замена контроллера по умолчанию
 	$_controller = '';
@@ -87,7 +88,16 @@ if (!$_controller || !file_exists(APP . '/controllers/' . $_model  . '.' . $_con
 }
 
 
+// Инициализация модели (используется и для передачи ошибки из контроллера)
+$_data = array('status' => true, 'data' => '', 'error' => '');
 
+// Подключение контроллера
+if ($_controller || ($_model == 'login')) require(APP . '/controllers/' . $_model  . ($_controller ? '.' . $_controller : '') . '.php');
+
+// Подключение модели
+require(APP . '/models/' . $_model . '.php');
+// Подключение представления
+require(APP . '/views/' . $_model . ($_view != 'index' ? '.' . $_view : '') . '.php');
 
 
 ?>
