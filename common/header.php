@@ -18,7 +18,7 @@ require_once('common.php');
 	<div class="header_frame">
 		<div class="header">
 			<div class="title">
-				Система размещения заказов
+				<a class="go_main_page" href="<?=WWW?>/" title="Перейти на главную страницу">Система размещения заказов</a>
 			</div>
 			<div class="menu">
 				<ul>
@@ -26,10 +26,29 @@ require_once('common.php');
 					<li>Меню 2</li>
 					<li>Меню 3</li>
 				</ul>
-				<div class="login">
+<?php
+
+// Если пользователь авторизован на сайте
+if (UID)
+{
+	// Вывод кнопки выхода из пользователя
+?>				<div class="login">
+					<a href="<?=WWW?>/?logout" title="Выйти из пользователя">Выход: <?=$_user['name']?></a>
+				</div>
+<?php
+	
+}
+else
+{
+	// Вывод кнопки входа на сайт
+?>				<div class="login">
 					<a href="<?=WWW?>/login/">Войти на сайт</a>
 				</div>
-			</div>
+<?php
+	
+}
+
+?>			</div>
 		</div>
 	</div>
 	<div class="header_spacer">&nbsp;</div>
@@ -40,7 +59,7 @@ require_once('common.php');
 // Назначение кеширующей функции
 ob_start(function ($data)
 {
-	// Формируем нижнюю часть сайта (футер)
+	// Формируем нижний колонтитул
 	$footer = <<<EOF
 	</div>
 	<div class="footer">© 2015 Алексей В. Коньшин. Все права защищены.</div>
@@ -48,7 +67,7 @@ ob_start(function ($data)
 </html>
 EOF;
 	
-	// Возвращаем данные вместе с футером
+	// Возвращаем данные вместе с нижним колонтитулом
 	return $data . $footer;
 	
 });

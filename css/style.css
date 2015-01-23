@@ -6,7 +6,7 @@
 */
 
 
-/* === Служебное ================================================================= */
+/* === Вспомогательные классы ================================================================= */
 
 @media print { .no_print { display: none; } }
 @media screen { .no_screen { display: none; } }
@@ -21,8 +21,41 @@
 	padding: 20px 30px;
 }
 
+.button
+{
+	background-color: #3AA6D0;
+	border-radius: 2px;
+	box-shadow: -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	color: white;
+	font-weight: bold;
+	
+}
+
+div.state-error
+{
+	background-color: red;
+	border-radius: 4px;
+	color: white;
+	margin-top: 10px;
+	padding: 5px;
+	
+}
+
+input.state-error
+{
+	border: 1px solid #FFA0A0 !important;
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.5)  !important;
+	
+}
+
 
 /* === Общая разметка ================================================================= */
+
+*
+{
+	box-sizing: border-box;
+	
+}
 
 body
 {
@@ -45,16 +78,6 @@ a img
 }
 
 
-.main_frame
-{
-	margin: auto;
-	width: 1000px;
-	
-}
-
-
-/* === Заголовок ================================================================= */
-
 .header_frame
 {
 	background-color: #0776A0;
@@ -69,7 +92,7 @@ a img
 .header_frame > .header
 {
 	background-color: white;
-	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
 	margin: auto;
 	width: 1000px;
 	
@@ -80,6 +103,13 @@ a img
 {
 	font-size: 3em;
 	padding: 20px 30px;
+	
+}
+
+.header_frame > .header > .title > a
+{
+	color: black;
+	text-decoration: none;
 	
 }
 
@@ -114,11 +144,7 @@ a img
 {
 	background-color: #00B945;
 	border-radius: 2px;
-	box-shadow:
-		0 1px 4px rgba(0, 0, 0, .3),
-		-23px 0 20px -23px rgba(0, 0, 0, .8),
-		23px 0 20px -23px rgba(0, 0, 0, .8),
-		0 0 40px rgba(0, 0, 0, .1) inset;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 	color: white;
 	font-weight: bold;
 	
@@ -151,6 +177,14 @@ a img
 }
 
 
+.main_frame
+{
+	margin: auto;
+	width: 1000px;
+	
+}
+
+
 .footer
 {
 	margin: 20px auto;
@@ -160,13 +194,64 @@ a img
 }
 
 
+/* === Вход на сайт ================================================================= */
+
+.main_frame > .login
+{
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+	margin-bottom: 20px;
+	padding: 30px;
+	
+}
+
+.main_frame > .login > .header
+{
+	font-size: 1.5em;
+	padding: 10px;
+	text-align: center;
+	
+}
+
+.main_frame > .login > .content
+{
+	border: 1px solid #808080;
+	margin: 0px auto 100px auto;
+	padding: 25px;
+	text-align: center;
+	width: 330px;
+	
+}
+
+.main_frame > .login > .content > p > input
+{
+	border: 1px solid #606060;
+	border-radius: 2px;
+	padding: 5px;
+	width: 250px;
+	
+}
+
+.main_frame > .login > .content > .action
+{
+	text-align: center;
+	
+}
+
+.main_frame > .login > .content > .action > input
+{
+	margin-right: 20px;
+	padding: 7px 18px;
+	
+}
+
+
 /* === Заказы ================================================================= */
 
 .orders .item
 {
 	background-color: white;
-	/*box-shadow: 5px 5px rgba(0, 0, 0, 0.2);*/
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 	margin-bottom: 20px;
 	
 }

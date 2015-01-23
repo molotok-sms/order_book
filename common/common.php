@@ -20,4 +20,16 @@ db_set_encoding(DB_CODEPAGE);
 header('Content-type: text/html; charset=' . CODEPAGE);
 
 
+// Подключение библиотеки вспомогательных функций
+require_once(ROOT . '/common/funcs.php');
+// Подключение библиотеки функций "users"
+require_once(ROOT . '/common/funcs.users.php');
+
+
+// Выход из пользователя
+users_logout();
+// Создание константы из идентификатора и получение информации о текущем пользователе
+users_declare_current();
+
+
 ?>

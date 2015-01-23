@@ -8,7 +8,7 @@ function db_affected_rows ($db_link=false)
 	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -16,12 +16,12 @@ function db_affected_rows ($db_link=false)
 	// Если ID подключения не задан или ошибка подключения
 	if (!$db_link || $db_link->connect_error)
 	{
-		// Возвращаем ошибку
+		// Возврат ошибки
 		return false;
 		
 	}
 	
-	// Возвращаем результат функции из средств самой СУБД
+	// Возврат кол-ва обработанных записей при последнем запросе
 	return $db_link->affected_rows;
 	
 }
@@ -32,23 +32,23 @@ function db_connect ($connection_string, $fglobal=true)
 {
 	global $_db;
 	
-	// Разбираем строку подключения на массив параметров
+	// Разбор строки подключения на массив параметров
 	parse_str(str_replace(' ', '&', $connection_string), $params);
 	
-	// Дополняем параметрами по умолчанию
+	// Дополнение параметрами по умолчанию
 	if (!isset($params['host'])) $params['host'] = 'localhost';
 	if (!isset($params['port'])) $params['port'] = '3306';
 	if (!isset($params['user'])) $params['user'] = 'root';
 	if (!isset($params['password'])) $params['password'] = '';
 	if (!isset($params['dbname'])) $params['dbname'] = 'mysql';
 	
-	// Подключаемся к Базе Данных
+	// Подключение к Базе Данных
 	$db_link = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname'], $params['port']);
 	
-	// Если нужно, то сохраняем идентификатор подключения глобально
+	// Если требуется, то сохраняем идентификатор подключения глобально
 	if ($fglobal) $_db = $db_link;
 	
-	// Возвращаем результат
+	// Возврат результата
 	return $db_link;
 	
 }
@@ -59,10 +59,10 @@ function db_close ($db_link=false)
 {
 	global $_db;
 	
-	// Если ID-подключения не передан
+	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -70,13 +70,48 @@ function db_close ($db_link=false)
 	// Если ID подключения не задан или ошибка подключения
 	if (!$db_link || $db_link->connect_error)
 	{
-		// Возвращаем ошибку
+		// Возврат ошибки
 		return false;
 		
 	}
 	
-	// Возвращаем результат закрытия подключения
+	// Возврат результата закрытия подключения
 	return $db_link->close();
+	
+}
+
+
+// Функция получения последней ошибки обращения к БД
+function db_error_string ($db_link=false)
+{
+	global $_db;
+	
+	// Если ID подключения не передан
+	if (!$db_link)
+	{
+		// Использование глобального ID подключения
+		$db_link = $_db;
+		
+	}
+	
+	// Если ID подключения не задан
+	if (!$db_link)
+	{
+		// Возврат ошибки
+		return false;
+		
+	}
+	
+	// Если ошибка подключения
+	if ($db_link->connect_error)
+	{
+		// Возврат ошибки
+		return $db_link->connect_error;
+		
+	}
+	
+	// Возврат текста последней ошибки обращения к БД
+	return $db_link->error;
 	
 }
 
@@ -86,10 +121,10 @@ function db_escape_string ($value, $db_link=false)
 {
 	global $_db;
 	
-	// Если ID-подключения не передан
+	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -97,12 +132,12 @@ function db_escape_string ($value, $db_link=false)
 	// Если ID подключения не задан или ошибка подключения
 	if (!$db_link || $db_link->connect_error)
 	{
-		// Возвращаем ошибку
+		// Возврат ошибки
 		return false;
 		
 	}
 	
-	// Возвращаем результат экранирования средствами Базы Данных
+	// Возврат результата экранирования средствами Базы Данных
 	return $db_link->escape_string($value);
 	
 }
@@ -113,10 +148,10 @@ function db_last_insert_id ($db_link=false)
 {
 	global $_db;
 	
-	// Если ID-подключения не передан
+	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -129,7 +164,7 @@ function db_last_insert_id ($db_link=false)
 		
 	}
 	
-	// Возвращаем результат функции из средств самой СУБД
+	// Возврат ID вставленной записи при последнем запросе
 	return $db_link->insert_id;
 	
 }
@@ -140,10 +175,10 @@ function db_query ($query, $db_link=false)
 {
 	global $_db;
 	
-	// Если ID-подключения не передан
+	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -151,13 +186,13 @@ function db_query ($query, $db_link=false)
 	// Если ID подключения не задан или ошибка подключения
 	if (!$db_link || $db_link->connect_error)
 	{
-		// Возвращаем ошибку
+		// Возврат ошибки
 		return false;
 		
 	}
 	
 	
-	// Выполняем SQL-запрос
+	// Выполнение запроса
 	$res = $db_link->query($query);
 	
 	// Если в качестве результата полученое логическое ИСТИНА
@@ -165,26 +200,27 @@ function db_query ($query, $db_link=false)
 	// Иначе, если получен набор записей
 	elseif ($res)
 	{
-		// Инициализируем результат
+		// Инициализация результата
 		$result = array();
 		
-		// Разбираем результат по записям
+		// Разбор результата по записям
 		while (($rec = $res->fetch_assoc()) != NULL)
 		{
-			// Добавляем запись к результату
+			// Добавление записи к результату
 			$result[] = $rec;
 			
 		}
 		
-		// Освобождаем память
+		// Освобождение памяти
 		$res->free();
 		
-		// Возвращаем результат
+		// Возврат результата
 		return $result;
 		
 	}
-	// Иначе, возвращаем неуспех
-	else return false;
+	
+	// По умолчанию, возврат неуспеха
+	return false;
 	
 }
 
@@ -194,10 +230,10 @@ function db_set_encoding ($encoding, $db_link=false)
 {
 	global $_db;
 	
-	// Если ID-подключения не передан
+	// Если ID подключения не передан
 	if (!$db_link)
 	{
-		// Используем глобальный ID подключения
+		// Использование глобального ID подключения
 		$db_link = $_db;
 		
 	}
@@ -205,12 +241,12 @@ function db_set_encoding ($encoding, $db_link=false)
 	// Если ID подключения не задан или ошибка подключения
 	if (!$db_link || $db_link->connect_error)
 	{
-		// Возвращаем ошибку
+		// Возврат ошибки
 		return false;
 		
 	}
 	
-	// Возвращем результат выполнения нескольких последовательных запросов к СУБД
+	// Возврат результата установки кодировки
 	return $db_link->set_charset($encoding);
 	
 }
