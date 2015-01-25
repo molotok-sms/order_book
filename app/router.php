@@ -4,100 +4,86 @@
 require_once('common/common.php');
 
 // Получение входных параметров
-$url = isset($_REQUEST['_url']) ? $_REQUEST['_url'] : '/';
-//print_log('debug', 'URL: ' . $url); // TODO
+$_url = isset($_REQUEST['_url']) ? $_REQUEST['_url'] : '/';
+
+
+//////////////////////////////////////////////////
+//
+// Инициализация глобальных переменных
+//
+//////////////////////////////////////////////////
+
+// Вызванный контроллер
+$_controller = '';
+// Запрошенное действие (не используется в контроллере "auth")
+$_action = '';
+// Дополнительные параметры в виде массива (в "сыром" виде)
+$_params = array();
+
+// Ошибка аутентификации
+$_auth_error = '';
+
+// Флаг "вывод колонтитулов" (может сбрасываться при AJAX-запросах)
+$_header = true;
+
+//////////////////////////////////////////////////
 
 
 // Удаляем имя домена из адреса (при наличии О_о)
-$url = preg_replace('#^http[s]{0,1}://' .  SITE_DOMAIN . WWW . '/#i', '/', $url);
+$_url = preg_replace('#^http[s]{0,1}://' .  SITE_DOMAIN . WWW . '/#i', '/', $_url);
 // Разбор входных параметров по разделителю (слэш)
-$params = preg_split('#/+#', $url, -1, PREG_SPLIT_NO_EMPTY);
-//print_log('debug', 'PARAMS:'); var_dump_log($params); // TODO
+$_params = preg_split('#/+#', $_url, -1, PREG_SPLIT_NO_EMPTY);
 
 
-// Инициализация переменных
-$_model = '';
-$_view = '';
-$_controller = '';
+// Подключение и вызов контроллера аутентификации
+require_once(APP . '/controllers/auth.php'); call_user_func_array('controller_auth', $_params);
 
-// Заполнение параметров
-if (count($params)) $_model = array_shift($params);
-if (count($params)) $_view = array_shift($params);
-if (count($params)) $_controller = array_shift($params);
 
-// Очищение названий модулей от посторонних символов
-$_model = preg_replace('#[^A-Za-z0-9]+#', '', $_model);
-$_view = preg_replace('#[^A-Za-z0-9]+#', '', $_view);
+// Получение имени запрошенного контроллера
+if (count($_params)) $_controller = array_shift($_params);
+// Очищение имени контроллера от посторонних символов
 $_controller = preg_replace('#[^A-Za-z0-9]+#', '', $_controller);
 
 
-// Если указана несуществующая модель
-if (!$_model || !file_exists(APP . '/models/' . $_model . '.php'))
-{
-	// Замена модели по умолчанию
-	$_model = 'index';
-	// Замена представления по умолчанию
-	$_view = 'index';
-	// Замена контроллера по умолчанию
-	$_controller = '';
-	
-	// Если модель (по умолчанию) не существует
-	if (!file_exists(APP . '/models/' . $_model . '.php'))
-	{
-		// Вывод сообщения об ошибке в лог-файл
-		print_log('error', 'Not found default model "' . $_model . '.php"');
-		
-		// Установка кода ошибка HTTP
-		http_response_code(500);
-		
-		// Завершение выполнения скрипта
-		exit;
-		
-	}
-	
-}
-
-// Если указано несуществующее представление
-if (!$_view || !file_exists(APP . '/views/' . $_model . ($_view != 'index' ? '.' . $_view : '') . '.php'))
-{
-	// Замена представления по умолчанию
-	$_view = 'index';
-	
-	// Если представление (по умолчанию) не существует
-	if (!file_exists(APP . '/views/' . $_view . '.php'))
-	{
-		// Вывод сообщения об ошибке в лог-файл
-		print_log('error', 'Not found default view "' . $_view  . '.php"');
-		
-		// Установка кода ошибка HTTP
-		http_response_code(500);
-		
-		// Завершение выполнения скрипта
-		exit;
-		
-	}
-	
-}
-
 // Если указан несуществующий контроллер, подстановка значения по умолчанию
-if (!$_controller || !file_exists(APP . '/controllers/' . $_model  . ($_controller ? '.' . $_controller : '') . '.php'))
+if (!$_controller || !file_exists(APP . '/controllers/' . $_controller . '.php'))
 {
 	// Замена контроллера по умолчанию
-	$_controller = '';
+	$_controller = 'orders';
 	
 }
 
 
-// Инициализация модели (используется и для передачи ошибки из контроллера)
-$_data = array('status' => true, 'data' => '', 'error' => '');
+// Если существует файл модели
+if (file_exists(APP . '/models/' . $_controller . '.php'))
+{
+	// Подключение модели
+	require_once(APP . '/models/' . $_controller . '.php');
+	
+}
 
-// Подключение контроллера
-if ($_controller || ($_model == 'login')) require(APP . '/controllers/' . $_model  . ($_controller ? '.' . $_controller : '') . '.php');
-
-// Подключение модели
-require(APP . '/models/' . $_model . '.php');
-// Подключение представления
-require(APP . '/views/' . $_model . ($_view != 'index' ? '.' . $_view : '') . '.php');
+// Если существует файл контроллера
+if (file_exists(APP . '/controllers/' . $_controller . '.php'))
+{
+	// Подключение контроллера
+	require_once(APP . '/controllers/' . $_controller . '.php');
+	
+	// Вызов функции контроллера
+	call_user_func_array('controller_' . $_controller, $_params);
+	
+}
+else
+{
+	// Вывод сообщения об ошибке в лог-файл
+	print_log('error', 'Not found controller "' . $_controller . '.php"');
+	
+	// Установка кода ошибка HTTP
+	http_response_code(500);
+	
+	// Завершение выполнения скрипта
+	exit;
+	
+}
 
 
 ?>

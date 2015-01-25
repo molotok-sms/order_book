@@ -1,77 +1,66 @@
 <?php
 
-// Подключение движка сайта
-require_once('../common/common.php');
+// Подключение верхнего колонтитула
+require('header.php');
 
-// Инициализация переменной
-$error_string = '';
-
-
-// Если аутентификация пользователя успешна
-if (users_login())
-{
-	// Если это AJAX-запрос
-	if (isset($_REQUEST['ajax']))
-	{
-		// Завершаем выполнение с выводом команды перенаправления
-		die('redirect');
-		
-	}
-	else
-	{
-		// Перенаправляем на Главную страницу сайта
-		redirect();
-		
-	}
-	
-}
-else
-{
-	// Устанавливаем текст ошибки
-	$error_string = 'Неправильное имя пользователя или пароль';
-	
-	// Если это AJAX-запрос, то завершаем выполнение с выводом ошибки
-	if (isset($_REQUEST['ajax'])) die($error_string);
-	
-}
-
-
-// Подключение заголовочной части сайта
-require_once('../common/header.php');
-
-
-
-?>
-<script language="javascript">
+?><script language="javascript">
 
 $(document).ready(function ()
 {
-	$('form.login').on('submit', function (e)
+	$('form.register').on('submit', function (e)
 	{
-		var login = $(this).find('#login');
-		var pass = $(this).find('#pass');
+		var data = { ajax: 1 , register: 1 };
+		var items = { user_email: 'e-Mail', user_second_name: 'отчество', user_name: 'имя', user_last_name: 'фамилию', user_pass_confirm: 'подтверждение пароля', user_pass: 'пароль', user_login: 'имя пользователя' };
+		var item;
 		var err = 0;
+		var i;
 		
 		$('.error_string').hide();
 		$('.error_string').text('');
 		
-		pass.removeClass('state-error');
-		login.removeClass('state-error');
+		data['user_customer'] = ($('#user_customer').get(0).checked ? 1 : 0);
+		data['user_executor'] = ($('#user_executor').get(0).checked ? 1 : 0);
 		
-		
-		if (pass.val().trim() == '')
+		if (!data['user_customer'] && !data['user_executor'])
 		{
-			pass.addClass('state-error');
-			pass.focus();
+			$('#user_executor').addClass('state-error').focus();
+			$('.error_string').text('Выберите хотя бы что-то одно: Заказчик или Исполнитель');
+			$('.error_string').show();
 			err++;
 			
 		}
 		
-		if (login.val().trim() == '')
+		if (!/.+@.+/.test($('#user_email').val().trim()))
 		{
-			login.addClass('state-error');
-			login.focus();
+			$('#user_email').addClass('state-error').focus();
+			$('.error_string').text('Некорректный E-Mail');
+			$('.error_string').show();
 			err++;
+			
+		}
+		
+		if ($('#user_pass').val().trim() != $('#user_pass_confirm').val().trim())
+		{
+			$('#user_pass_confirm').addClass('state-error').focus();
+			$('.error_string').text('Введенные пароли не совпадают');
+			$('.error_string').show();
+			err++;
+			
+		}
+		
+		for (i in items)
+		{
+			item = $('#' + i).removeClass('state-error');
+			data[i] = item.val().trim();
+			
+			if (data[i] == '')
+			{
+				item.addClass('state-error').focus();
+				$('.error_string').text('Укажите ' + items[i]);
+				$('.error_string').show();
+				err++;
+				
+			}
 			
 		}
 		
@@ -80,7 +69,7 @@ $(document).ready(function ()
 		
 		$.ajax
 		({
-			data: { ajax: 1, login: login.val(), pass: pass.val() },
+			data: data,
 			error: function (jqXHR, textStatus, errorThrown)
 			{
 				$('.error_string').text('Ошибка обращения к серверу!');
@@ -97,19 +86,13 @@ $(document).ready(function ()
 					
 				}
 				
-				if (data.toString().indexOf('redirect') >= 0)
-				{
-					location.href = $('.go_main_page').attr('href');
-					return;
-					
-				}
-				
-				$('.error_string').text(data);
-				$('.error_string').show();
+				$('.main_frame').html(data);
+				window.scrollTo(0, 0);
 				
 			},
 			timeout: 15000,
-			type: 'POST'
+			type: 'POST',
+			url: $(this).attr('action')
 			
 		});
 		
@@ -120,15 +103,56 @@ $(document).ready(function ()
 });
 
 </script>
-<form action="https://<?=SITE_DOMAIN?>/<?=WWW?>/login/" class="login" method="post">
-	<h1 class="header">Вход на сайт</h1>
+<form action="https://<?=(SITE_DOMAIN . WWW)?>/register" class="register simple_page" method="post">
+	<h1 class="header">Регистрация на сайте</h1>
 	<div class="content">
-		<p><input autofocus id="login" placeholder="Имя пользователя" name="login" value=""></p>
-		<p><input id="pass" placeholder="Пароль" name="pass" type="password" value=""></p>
+		<table align="center">
+			<tr>
+				<td>Имя пользователя:</td>
+				<td><input <?=(!$_data['error_field'] ? 'autofocus' : '')?><?=(($_data['error_field'] == 'user_login') ? 'autofocus class="state-error"' : '')?> id="user_login" placeholder="Имя пользователя" name="user_login" value="<?=$_data['data']['user_login']?>"></td>
+			</tr>
+			<tr>
+				<td>Пароль:</td>
+				<td><input <?=(($_data['error_field'] == 'user_pass') ? 'autofocus class="state-error"' : '')?> id="user_pass" placeholder="Пароль" name="user_pass" type="password" value=""></td>
+			</tr>
+			<tr>
+				<td>Подтверждение пароля:</td>
+				<td><input <?=(($_data['error_field'] == 'user_pass_confirm') ? 'autofocus class="state-error"' : '')?> id="user_pass_confirm" placeholder="Подтверждение пароля" name="user_pass_confirm" type="password" value=""></td>
+			</tr>
+			<tr>
+				<td>Фамилия:</td>
+				<td><input <?=(($_data['error_field'] == 'user_last_name') ? 'autofocus class="state-error"' : '')?> id="user_last_name" placeholder="Фамилия" name="user_last_name" value="<?=$_data['data']['user_last_name']?>"></td>
+			</tr>
+			<tr>
+				<td>Имя:</td>
+				<td><input <?=(($_data['error_field'] == 'user_name') ? 'autofocus class="state-error"' : '')?> id="user_name" placeholder="Имя" name="user_name" value="<?=$_data['data']['user_name']?>"></td>
+			</tr>
+			<tr>
+				<td>Отчество:</td>
+				<td><input <?=(($_data['error_field'] == 'user_second_name') ? 'autofocus class="state-error"' : '')?> id="user_second_name" placeholder="Отчество" name="user_second_name" value="<?=$_data['data']['user_second_name']?>"></td>
+			</tr>
+			<tr>
+				<td>E-Mail:</td>
+				<td><input <?=(($_data['error_field'] == 'user_email') ? 'autofocus class="state-error"' : '')?> id="user_email" placeholder="E-Mail" name="user_email" value="<?=$_data['data']['user_email']?>"></td>
+			</tr>
+			<tr>
+				<td>Заказчик:</td>
+				<td><input <?=(($_data['error_field'] == 'user_customer') ? 'autofocus class="state-error"' : '')?> <?=($_data['data']['user_customer'] ? 'checked' : '')?> id="user_customer" name="user_customer" type="checkbox"></td>
+			</tr>
+			<tr>
+				<td>Исполнитель:</td>
+				<td><input <?=(($_data['error_field'] == 'user_executor') ? 'autofocus class="state-error"' : '')?> <?=($_data['data']['user_executor'] ? 'checked' : '')?> id="user_executor" name="user_executor" type="checkbox"></td>
+			</tr>
+		</table>
 		<div class="action">
-			<input class="button" type="submit" value="Войти" />
-			<a href="<?=WWW?>/register">Регистрация</a>
+			<input class="button" type="submit" value="Подтвердить" />
 		</div>
-		<div class="error_string state-error" <?php if ($error_string) { ?>style="display: none;"<?php } ?>><?=$error_string?></div>
+		<div class="error_string state-error" <?php if (!$_data['error']) { ?>style="display: none;"<?php } ?>><?=$_data['error']?></div>
 	</div>
 </form>
+<?php
+
+// Подключение нижнего колонтитула
+require('footer.php');
+
+?>

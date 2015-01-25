@@ -1,10 +1,9 @@
 <?php
 
-// Подключение заголовочной части сайта
-require_once('../app/common/header.php');
+// Подключение верхнего колонтитула
+require('header.php');
 
-?>
-<div class="orders">
+?><div class="orders">
 <?php
 
 // Перебор элементов
@@ -26,3 +25,8 @@ foreach ($_data['data'] as $item)
 
 ?></div>
 <?php
+
+// Подключение нижнего колонтитула
+require('footer.php');
+
+?>

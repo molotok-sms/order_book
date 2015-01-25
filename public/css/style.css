@@ -150,6 +150,13 @@ a img
 	
 }
 
+.header_frame > .header > .menu > ul > li > a
+{
+	color: black;
+	text-decoration: none;
+	
+}
+
 .header_frame > .header > .menu:after
 {
 	clear: both;
@@ -194,9 +201,9 @@ a img
 }
 
 
-/* === Вход на сайт ================================================================= */
+/* === Шаблон страниц ================================================================= */
 
-.main_frame > .login
+.main_frame > .simple_page
 {
 	background-color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
@@ -205,7 +212,7 @@ a img
 	
 }
 
-.main_frame > .login > .header
+.main_frame > .simple_page > .header
 {
 	font-size: 1.5em;
 	padding: 10px;
@@ -213,17 +220,14 @@ a img
 	
 }
 
-.main_frame > .login > .content
+.main_frame > .simple_page > .content
 {
-	border: 1px solid #808080;
 	margin: 0px auto 100px auto;
 	padding: 25px;
-	text-align: center;
-	width: 330px;
 	
 }
 
-.main_frame > .login > .content > p > input
+.main_frame > .simple_page > .content > p > input
 {
 	border: 1px solid #606060;
 	border-radius: 2px;
@@ -232,13 +236,28 @@ a img
 	
 }
 
-.main_frame > .login > .content > .action
+.main_frame > .simple_page > .content > table
 {
+	border-collapse: collapse;
+	text-align: left;
+	
+}
+
+.main_frame > .simple_page > .content > table td
+{
+	padding: 7px 20px;
+	vertical-align: middle;
+	
+}
+
+.main_frame > .simple_page > .content > .action
+{
+	margin-top: 20px;
 	text-align: center;
 	
 }
 
-.main_frame > .login > .content > .action > input
+.main_frame > .simple_page > .content > .action > input
 {
 	margin-right: 20px;
 	padding: 7px 18px;
@@ -246,13 +265,35 @@ a img
 }
 
 
-/* === Заказы ================================================================= */
+/* === login (Вход на сайт) ================================================================= */
+
+.main_frame > .login > .content
+{
+	border: 1px solid #808080;
+	text-align: center;
+	width: 330px;
+	
+}
+
+
+/* === orders (Заказы) ================================================================= */
 
 .orders .item
 {
 	background-color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 	margin-bottom: 20px;
+	
+}
+
+
+/* === register (Регистрация) ================================================================= */
+
+.main_frame > .register > .content
+{
+	border: 1px solid #808080;
+	text-align: center;
+	width: 500px;
 	
 }
 

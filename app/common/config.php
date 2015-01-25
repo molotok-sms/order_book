@@ -6,6 +6,8 @@
 
 // Кодовая страница сайта
 define('CODEPAGE', 'utf-8');
+// Максимальное время жизни сессии при простое
+define('SESSION_MAX_IDLE', 1440);
 // Домен сайта
 define('SITE_DOMAIN', 'order_book');
 

@@ -1,9 +1,4 @@
-<?php
-
-// Подключение движка сайта
-require_once('common.php');
-
-?>
+<?php if (!$_header) return; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +20,7 @@ require_once('common.php');
 				<ul>
 					<li class="highlight">Разместить заказ</li>
 					<li>Меню 2</li>
-					<li>Меню 3</li>
+					<li><a href="<?=WWW?>/about">О проекте</a></li>
 				</ul>
 <?php
 
@@ -34,7 +29,7 @@ if (UID)
 {
 	// Вывод кнопки выхода из пользователя
 ?>				<div class="login">
-					<a href="<?=WWW?>/?logout" title="Выйти из пользователя">Выход: <?=$_user['name']?></a>
+					<a href="<?=WWW?>/logout" title="Выйти из пользователя">Выход: <?=$_user['name']?></a>
 				</div>
 <?php
 	
@@ -54,23 +49,3 @@ else
 	</div>
 	<div class="header_spacer">&nbsp;</div>
 	<div class="main_frame">
-<?php
-
-
-// Назначение кеширующей функции
-ob_start(function ($data)
-{
-	// Формируем нижний колонтитул
-	$footer = <<<EOF
-	</div>
-	<div class="footer">© 2015 Алексей В. Коньшин. Все права защищены.</div>
-</body>
-</html>
-EOF;
-	
-	// Возвращаем данные вместе с нижним колонтитулом
-	return $data . $footer;
-	
-});
-
-?>

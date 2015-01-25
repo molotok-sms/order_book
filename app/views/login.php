@@ -1,10 +1,9 @@
 <?php
 
-// Подключение заголовочной части сайта
-require_once('../app/common/header.php');
+// Подключение верхнего колонтитула
+require('header.php');
 
-?>
-<script language="javascript">
+?><script language="javascript">
 
 $(document).ready(function ()
 {
@@ -20,29 +19,15 @@ $(document).ready(function ()
 		pass.removeClass('state-error');
 		login.removeClass('state-error');
 		
-		
-		if (pass.val().trim() == '')
-		{
-			pass.addClass('state-error');
-			pass.focus();
-			err++;
-			
-		}
-		
-		if (login.val().trim() == '')
-		{
-			login.addClass('state-error');
-			login.focus();
-			err++;
-			
-		}
+		if (pass.val().trim() == '') { pass.addClass('state-error'); pass.focus(); err++; }
+		if (login.val().trim() == '') { login.addClass('state-error'); login.focus(); err++; }
 		
 		if (err) return false;
 		
 		
 		$.ajax
 		({
-			data: { ajax: 1, login: login.val(), pass: pass.val() },
+			data: { ajax: 1, login: login.val().trim(), pass: pass.val().trim() },
 			error: function (jqXHR, textStatus, errorThrown)
 			{
 				$('.error_string').text('Ошибка обращения к серверу!');
@@ -82,10 +67,10 @@ $(document).ready(function ()
 });
 
 </script>
-<form action="https://<?=(SITE_DOMAIN . WWW)?>/login/" class="login" method="post">
+<form action="https://<?=(SITE_DOMAIN . WWW)?>/login/" class="login simple_page" method="post">
 	<h1 class="header">Вход на сайт</h1>
 	<div class="content">
-		<p><input autofocus id="login" placeholder="Имя пользователя" name="login" value=""></p>
+		<p><input autofocus id="login" placeholder="Имя пользователя" name="login" value="<?=$_data['data']['login']?>"></p>
 		<p><input id="pass" placeholder="Пароль" name="pass" type="password" value=""></p>
 		<div class="action">
 			<input class="button" type="submit" value="Войти" />
@@ -94,3 +79,9 @@ $(document).ready(function ()
 		<div class="error_string state-error" <?php if (!$_data['error']) { ?>style="display: none;"<?php } ?>><?=$_data['error']?></div>
 	</div>
 </form>
+<?php
+
+// Подключение нижнего колонтитула
+require('footer.php');
+
+?>
