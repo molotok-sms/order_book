@@ -294,6 +294,40 @@ a img
 
 /* === orders (Заказы) ================================================================= */
 
+.main_frame > .pager
+{
+	margin-bottom: 20px;
+	text-align: center;
+	
+}
+
+.main_frame > .pager > .page
+{
+	background-color: white;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+	display: inline;
+	margin-right: 5px;
+	padding: 5px 8px;
+	
+}
+
+.main_frame > .pager > .page.current > a
+{
+	text-decoration: none;
+	
+}
+
+.main_frame > .pager > .spacer
+{
+	color: white;
+	display: inline;
+	font-family: sans-serif;
+	font-weight: bold;
+	margin-right: 5px;
+	
+}
+
+
 .main_frame > .orders.empty
 {
 	background-color: white;

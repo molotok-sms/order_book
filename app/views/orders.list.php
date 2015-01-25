@@ -42,7 +42,46 @@ elseif (!count($_data['data']))
 }
 else
 {
+	// Вывод панели навигации по страницам
+?><div class="pager">
+<?php
 	
+	// Перебор доступных номеров страниц
+	for ($i = 0; $i < count($_data['pages']); $i++)
+	{
+		// Если текущий номер сильно больше предыдущего
+		if (($i > 0) && ($_data['pages'][$i] - $_data['pages'][$i - 1] > 1))
+		{
+			// Вывод пробельных символов
+?>	<div class="spacer">...</div>
+<?php
+			
+		}
+		
+		// Если это текущая страница
+		if ($_data['pages'][$i] == $_data['page'])
+		{
+			// Вывод номера текущей страницы
+?>	<div class="page current"><a href="#"><?=$_data['pages'][$i]?></a></div>
+<?php
+			
+		}
+		else
+		{
+			// Вывод ссылки на страницу
+?>	<div class="page"><a href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
+<?php
+			
+		}
+		
+	}
+	
+	
+?></div>
+<?php
+	
+	
+	// Вывод элементов
 ?><div class="orders">
 <?php
 	
@@ -72,6 +111,45 @@ else
 <?php
 		
 	}
+	
+?></div>
+<?php
+	
+	
+	// Вывод панели навигации по страницам
+?><div class="pager">
+<?php
+	
+	// Перебор доступных номеров страниц
+	for ($i = 0; $i < count($_data['pages']); $i++)
+	{
+		// Если текущий номер сильно больше предыдущего
+		if (($i > 0) && ($_data['pages'][$i] - $_data['pages'][$i - 1] > 1))
+		{
+			// Вывод пробельных символов
+?>	<div class="spacer">...</div>
+<?php
+			
+		}
+		
+		// Если это текущая страница
+		if ($_data['pages'][$i] == $_data['page'])
+		{
+			// Вывод номера текущей страницы
+?>	<div class="page current"><a href="#"><?=$_data['pages'][$i]?></a></div>
+<?php
+			
+		}
+		else
+		{
+			// Вывод ссылки на страницу
+?>	<div class="page"><a href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
+<?php
+			
+		}
+		
+	}
+	
 	
 ?></div>
 <?php

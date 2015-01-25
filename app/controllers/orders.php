@@ -77,20 +77,40 @@ function controller_orders ($params)
 	$orders_count = orders_get_count();
 	$orders_count = $orders_count['result'];
 	// Получение кол-ва страниц
-	$page_count = floor($orders_count / ORDERS_ON_PAGE);
+	$page_count = ceil($orders_count / ORDERS_ON_PAGE);
 	
-	// Приведение к типу номера страницы
-	$params[0] = (int) $params[0];
+	// Подключение номера страницы
+	$page = (int) $params[0];
 	// Проверка на граничные значения
-	if ($params[0] < 1) $params[0] = 1;
-	if ($params[0] > $page_count) $params[0] = 1;
+	if ($page < 1) $page = 1;
+	if ($page > $page_count) $page = 1;
+	
+	
+	// Инициализация списка страниц
+	$lst_pages = array(1);
+	
+	// Перебор страниц ближайших к текущей (от -2 до +2)
+	for ($i = $page - 2; $i <= $page + 2; $i++)
+	{
+		// Если такая страница существует (без первой и последней)
+		if (($i > 1) && ($i < $page_count))
+		{
+			// Добавление страницы в список
+			$lst_pages[] = $i;
+			
+		}
+		
+	}
+	
+	// Если доступно больше одной страницы, добавление последней страницы
+	if ($page_count > 1) $lst_pages[] = $page_count;
 	
 	
 	// Инициализация данных
-	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array(), 'page' => $params[0], 'page_count' => $page_count);
+	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array(), 'pages' => $lst_pages, 'page' => $page);
 	
 	// Получение списка заказов
-	$result = orders_get(false, $filter, ORDERS_ON_PAGE * ($params[0] - 1), ORDERS_ON_PAGE);
+	$result = orders_get(false, $filter, ORDERS_ON_PAGE * ($page - 1), ORDERS_ON_PAGE);
 	
 	// Если выполнение запроса успешно
 	if (is_array($result['result']))

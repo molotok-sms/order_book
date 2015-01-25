@@ -257,7 +257,7 @@ WHERE `uid` = "' . $result_order_info['customer_uid'] . '";
 		// Формирование запроса фиксации исполнения заказа
 		$query = '
 UPDATE `orders`
-SET `executor_uid` = "' . UID . '"
+SET `executor_uid` = "' . UID . '", `update_datetime` = UNIX_TIMESTAMP()
 WHERE `oid` = "' . $oid . '" AND `executor_uid` = 0;
 		';
 		
