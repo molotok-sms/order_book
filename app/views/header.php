@@ -8,7 +8,7 @@
 <script language="javascript" src="<?=WWW?>/public/js/jquery.min.js"></script>
 <script language="javascript" src="<?=WWW?>/public/js/jquery-ui.min.js"></script>
 <script language="javascript" src="<?=WWW?>/public/js/jquery.blockUI.js"></script>
-<title>Система размещения заказов</title>
+<title><?=(($_header_title != '') ? $_header_title . ' :: ' : '')?>Система размещения заказов</title>
 </head>
 <body>
 	<div class="header_frame">

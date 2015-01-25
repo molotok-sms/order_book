@@ -1,5 +1,8 @@
 <?php
 
+// Настройка заголовка
+$_header_title = 'Разместить заказ';
+
 // Подключение верхнего колонтитула
 require('header.php');
 
@@ -49,6 +52,10 @@ $(document).ready(function ()
 				
 				$('.main_frame').html(data);
 				window.scrollTo(0, 0);
+				
+				var title = document.title.replace(/^(.*) ::/, '');
+				history.replaceState('', title, '<?=WWW?>/orders');
+				document.title = title;
 				
 			},
 			timeout: 15000,

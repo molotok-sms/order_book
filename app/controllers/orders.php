@@ -4,6 +4,7 @@
 function controller_orders ($action='')
 {
 	global $_header;
+	global $_header_title;
 	global $_user;
 	
 	

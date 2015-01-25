@@ -349,9 +349,38 @@ a img
 
 .main_frame > .orders .item > .info
 {
-	border: 1px solid silver;
+	/*border: 1px solid silver;*/
+	font-family: Verdana;
+	font-size: 0.7em;
 	margin: 0.8em 0em 0.4em 0em;
-	padding: 5px;
+	padding: 5px 0;
+	
+}
+
+.main_frame > .orders .item > .info > .date
+{
+	color: gray;
+	display: inline;
+	padding-right: 10px;
+	
+}
+
+.main_frame > .orders .item > .info > .customer
+{
+	color: #FF8500;
+	display: inline;
+	font-weight: bold;
+	padding-right: 20px;
+	
+}
+
+.main_frame > .orders .item > .info > .price
+{
+	color: red;
+	display: inline;
+	font-family: serif;
+	font-size: 1.5em;
+	font-weight: bold;
 	
 }
 

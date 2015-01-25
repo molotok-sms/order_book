@@ -49,15 +49,19 @@ function orders_get ()
 SELECT
 	`oid`,
 	`customer_uid`,
+	`users`.`last_name` AS "customer_last_name",
+	`users`.`name` AS "customer_name",
+	`users`.`second_name` AS "customer_second_name",
+	CONCAT(`users`.`last_name`, " ", SUBSTRING(`users`.`name`, 1, 1), ". ", SUBSTRING(`users`.`second_name`, 1, 1), ".") AS "customer_short_name",
 	`title`,
 	`description`,
 	`price`,
-	`create_datetime` AS "create_datetime_unix",
-	`update_datetime` AS "update_datetime_unix",
-	FROM_UNIXTIME(`create_datetime`) AS "create_datetime",
-	FROM_UNIXTIME(`update_datetime`) AS "update_datetime"
+	`orders`.`create_datetime` AS "create_datetime_unix",
+	`orders`.`update_datetime` AS "update_datetime_unix",
+	FROM_UNIXTIME(`orders`.`create_datetime`) AS "create_datetime",
+	FROM_UNIXTIME(`orders`.`update_datetime`) AS "update_datetime"
 	
-FROM `orders`
+FROM `orders` INNER JOIN `users` ON `orders`.`customer_uid` = `users`.`uid`
 WHERE `executor_uid` = 0
 ORDER BY `update_datetime` DESC;
 	';

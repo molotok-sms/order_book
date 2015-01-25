@@ -5,6 +5,7 @@ function controller_auth ($action='', $redirect='')
 {
 	global $_auth_error; // TODO: может убрать из global
 	global $_header;
+	global $_header_title;
 	global $_user;
 	
 	

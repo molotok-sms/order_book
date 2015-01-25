@@ -56,11 +56,18 @@ else
 		// Форматирование даты и времени
 		$item['update_datetime'] = format_date('d F Y', strtotime($item['update_datetime']));
 		
+		// Форматирование стоимости
+		$item['price'] = number_format($item['price'], 0, ',', ' ') . ' руб.';
+		
 		// Вывод текущего элемента
 ?>	<div class="item padding30">
 		<div class="header"><h2><?=$item['title']?></h2></div>
 		<div class="content"><?=$item['description']?></div>
-		<div class="info"><?=$item['update_datetime']?></div>
+		<div class="info">
+			<div class="date"><?=$item['update_datetime']?></div>
+			<div class="customer"><?=$item['customer_short_name']?></div>
+			<div class="price"><?=$item['price']?></div>
+		</div>
 	</div>
 <?php
 		
