@@ -38,7 +38,7 @@ $_params = preg_split('#/+#', $_url, -1, PREG_SPLIT_NO_EMPTY);
 
 
 // Подключение и вызов контроллера аутентификации
-require_once(APP . '/controllers/auth.php'); call_user_func_array('controller_auth', $_params);
+require_once(APP . '/controllers/auth.php'); call_user_func('controller_auth', $_params);
 
 
 // Получение имени запрошенного контроллера
@@ -71,7 +71,7 @@ if (file_exists(APP . '/controllers/' . $_controller . '.php'))
 	require_once(APP . '/controllers/' . $_controller . '.php');
 	
 	// Вызов функции контроллера
-	call_user_func_array('controller_' . $_controller, $_params);
+	call_user_func('controller_' . $_controller, $_params);
 	
 }
 else

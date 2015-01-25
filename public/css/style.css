@@ -11,16 +11,6 @@
 @media print { .no_print { display: none; } }
 @media screen { .no_screen { display: none; } }
 
-.padding10
-{
-	padding: 5px 10px;
-}
-
-.padding30
-{
-	padding: 20px 30px;
-}
-
 .button
 {
 	background-color: #3AA6D0;
@@ -46,6 +36,25 @@ input.state-error
 {
 	border: 1px solid #FFA0A0 !important;
 	box-shadow: 0 0 10px rgba(255, 0, 0, 0.5)  !important;
+	
+}
+
+div.state-success
+{
+	background-color: #37DC74;
+	border-radius: 4px;
+	margin-top: 10px;
+	padding: 10px;
+	text-align: center;
+	
+}
+
+input.ajax
+{
+	background-color: transparent !important;
+	background-image: url(../images/ajax_loader_blue_32.gif);
+	background-position: center;
+	background-repeat: no-repeat;
 	
 }
 
@@ -320,36 +329,63 @@ a img
 }
 
 
-.main_frame > .orders .item
+.main_frame > .orders > .item,
+.main_frame > .orders-item
 {
 	background-color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 	margin-bottom: 20px;
+	padding: 20px 30px;
 	
 }
 
-.main_frame > .orders .item .header h2
+.main_frame > .orders > .item > .header h2,
+.main_frame > .orders-item > .header h2
 {
 	margin: 0.4em 0em 0.8em 0em;
 	
 }
 
-.main_frame > .orders .item .content
+.main_frame > .orders > .item > .content,
+.main_frame > .orders-item > .content
 {
 	text-align: justify;
 	white-space: pre-wrap;
 	
 }
 
-.main_frame > .orders .item .content p
+.main_frame > .orders > .item > .content p,
+.main_frame > .orders-item > .content p
 {
 	margin: 0;
 	
 }
 
-.main_frame > .orders .item > .info
+.main_frame > .orders > .item > .action,
+.main_frame > .orders-item > .action
 {
-	/*border: 1px solid silver;*/
+	margin: 20px 0;
+	
+}
+
+.main_frame > .orders > .item > .action > a,
+.main_frame > .orders-item > .action > input
+{
+	background-color: #00B945;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	color: white;
+	font-family: Verdana;
+	font-size: 0.8em;
+	font-weight: bold;
+	padding: 10px 20px;
+	text-decoration: none;
+	
+}
+
+.main_frame > .orders > .item > .info,
+.main_frame > .orders-item > .info
+{
 	font-family: Verdana;
 	font-size: 0.7em;
 	margin: 0.8em 0em 0.4em 0em;
@@ -357,7 +393,8 @@ a img
 	
 }
 
-.main_frame > .orders .item > .info > .date
+.main_frame > .orders > .item > .info > .date,
+.main_frame > .orders-item > .info > .date
 {
 	color: gray;
 	display: inline;
@@ -365,7 +402,8 @@ a img
 	
 }
 
-.main_frame > .orders .item > .info > .customer
+.main_frame > .orders > .item > .info > .customer,
+.main_frame > .orders-item > .info > .customer
 {
 	color: #FF8500;
 	display: inline;
@@ -374,7 +412,8 @@ a img
 	
 }
 
-.main_frame > .orders .item > .info > .price
+.main_frame > .orders > .item > .info > .price,
+.main_frame > .orders-item > .info > .price
 {
 	color: red;
 	display: inline;
@@ -420,6 +459,28 @@ a img
 	height: 200px;
 	padding: 5px;
 	width: 604px;
+	
+}
+
+
+.main_frame > .orders-item
+{
+	padding-bottom: 20px;
+	
+}
+
+.main_frame > .orders-item > .action > input,
+.main_frame > .orders-item > .action > div
+{
+	margin-right: 10px;
+	
+}
+
+.main_frame > .orders-item .error_string,
+.main_frame > .orders-item .success_string
+{
+	border: 1px solid transparent;
+	display: inline;
 	
 }
 

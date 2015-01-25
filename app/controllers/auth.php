@@ -1,7 +1,7 @@
 <?php
 
 // Функция реализации контроллера
-function controller_auth ($action='', $redirect='')
+function controller_auth ($params='')
 {
 	global $_auth_error; // TODO: может убрать из global
 	global $_header;
@@ -13,7 +13,11 @@ function controller_auth ($action='', $redirect='')
 	require(APP . '/models/users.php');
 	
 	
-	// Получение входных параметров
+	// Получение параметров из URL
+	$action = (is_array($params) && count($params)) ? array_shift($params) : '';
+	$redirect = (is_array($params) && count($params)) ? array_shift($params) : '';
+	
+	// Получение POST-параметров
 	$fajax = isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
 	$flogin = isset($_POST['login']) ? true : false;
 	$login = isset($_POST['login']) ? $_POST['login'] : '';

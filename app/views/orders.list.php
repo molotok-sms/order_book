@@ -4,7 +4,6 @@
 require('header.php');
 
 
-
 // Если произошла ошибка
 if (!$_data['status'])
 {
@@ -60,9 +59,10 @@ else
 		$item['price'] = number_format($item['price'], 0, ',', ' ') . ' руб.';
 		
 		// Вывод текущего элемента
-?>	<div class="item padding30">
+?>	<div class="item">
 		<div class="header"><h2><?=$item['title']?></h2></div>
 		<div class="content"><?=$item['description']?></div>
+		<div class="action"><a href="<?=WWW?>/orders/item/<?=$item['oid']?>">Подробнее</a></div>
 		<div class="info">
 			<div class="date"><?=$item['update_datetime']?></div>
 			<div class="customer"><?=$item['customer_short_name']?></div>

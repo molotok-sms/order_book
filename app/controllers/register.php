@@ -1,14 +1,17 @@
 <?php
 
 // Функция реализации контроллера
-function controller_register ($confirm='')
+function controller_register ($params='')
 {
 	global $_header;
 	global $_header_title;
 	global $_user;
 	
 	
-	// Получение входных параметров
+	// Получение параметров из URL
+	$fconfirm = (is_array($params) && count($params)) ? true : false;
+	
+	// Получение POST-параметров
 	$fajax				= isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
 	$fdata				= isset($_POST['register']) && $_POST['register'] ? true : false;
 	$user_login			= isset($_POST['user_login']) ? $_POST['user_login'] : '';
@@ -20,7 +23,6 @@ function controller_register ($confirm='')
 	$user_email			= isset($_POST['user_email']) ? $_POST['user_email'] : '';
 	$user_customer		= isset($_POST['user_customer']) && $_POST['user_customer'] ? 1 : 0;
 	$user_executor		= isset($_POST['user_executor']) && $_POST['user_executor'] ? 1 : 0;
-	$fconfirm			= ($confirm) ? true : false;
 	
 	
 	// Экранирование входных параметров с удалением пробельных символов

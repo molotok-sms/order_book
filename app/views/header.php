@@ -20,27 +20,41 @@
 				<ul>
 <?php
 
-// Если пользователь является Заказчиком
-if (UID && $_user && $_user['customer'])
+// Флаг "Заказчик"
+$c = (UID && $_user && $_user['customer']);
+// Флаг "Исполнитель"
+$e = (UID && $_user && $_user['executor']);
+
+
+if ($c && $e)
 {
-	// Вывод специфичных элементов меню
 ?>					<li class="highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+					<li><a href="<?=WWW?>/orders/go">История заказов</a></li>
 <?php
-	
 }
-
-// Если пользователь является Исполнителем
-if (UID && $_user && $_user['executor'])
+elseif ($c)
 {
-	// Вывод специфичных элементов меню
-?>					<li class="highlight"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+?>					<li class="highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
 <?php
-	
+}
+elseif ($e)
+{
+?>					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li><a href="<?=WWW?>/orders/go">История заказов</a></li>
+<?php
+}
+else
+{
+?>					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+<?php
 }
 
-?>
-					<li><a href="<?=WWW?>/orders">Заказы</a></li>
-					<li><a href="<?=WWW?>/about">О проекте</a></li>
+
+?>					<li><a href="<?=WWW?>/about">О проекте</a></li>
 				</ul>
 <?php
 
