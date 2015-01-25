@@ -11,6 +11,8 @@ define('LOCALE', 'ru_RU');
 define('LOCALE_ALT', 'rus_RUS');
 // Кол-во заказов на странице
 define('ORDERS_ON_PAGE', 5);
+// Процент системы с заказов (0.05 - 5%)
+define('PERCENTAGE_OF_ORDERS', '0.05');
 // Максимальное время жизни сессии при простое
 define('SESSION_MAX_IDLE', 1440);
 // Домен сайта

@@ -224,7 +224,8 @@ function orders_go ($oid)
 	$query = '
 SELECT
 	`customer_uid`,
-	`price`
+	`price`,
+	`price` * "' . PERCENTAGE_OF_ORDERS . '" AS "percent"
 FROM `orders`
 WHERE `oid` = "' . $oid . '" AND `executor_uid` = 0;
 	';
@@ -240,10 +241,10 @@ WHERE `oid` = "' . $oid . '" AND `executor_uid` = 0;
 		$result_order_info = current($result_order_info);
 		
 		
-		// Формирование запроса начисления денег Исполнителю
+		// Формирование запроса начисления денег Исполнителю (за вычетом процентов)
 		$query = '
 UPDATE `users`
-SET `bank` = `bank` + "' . $result_order_info['price'] . '"
+SET `bank` = `bank` + "' . $result_order_info['price'] . '" - "' . $result_order_info['percent'] . '"
 WHERE `uid` = "' . UID . '";
 		';
 		
@@ -251,7 +252,7 @@ WHERE `uid` = "' . UID . '";
 		$result_bank_inc = db_query($query);
 		
 		
-		// Формирование запроса снятия денег у Заказчика
+		// Формирование запроса снятия денег у Заказчика (полной суммы)
 		$query = '
 UPDATE `users`
 SET `bank` = `bank` - "' . $result_order_info['price'] . '"
@@ -273,6 +274,17 @@ WHERE `oid` = "' . $oid . '" AND `executor_uid` = 0;
 		$result_order_update = db_query($query);
 		
 		
+		// Формирование запроса фиксации операции получения процентов
+		$query = '
+INSERT INTO `transactions`
+(`oid`, `percent`, `create_datetime`)
+VALUES ("' . $oid . '", "' . $result_order_info['percent'] . '", UNIX_TIMESTAMP());
+		';
+		
+		// Выполнение запроса
+		$result_insert_tran = db_query($query);
+		
+		
 		// Формирование запроса подтверждения транзакции
 		$query = 'COMMIT;';
 		// Выполнение запроса
@@ -280,7 +292,7 @@ WHERE `oid` = "' . $oid . '" AND `executor_uid` = 0;
 		
 		
 		// Если выполнение всех запросов успешно
-		if ($result_bank_inc && $result_bank_dec && $result_order_update && $result_tran_commit)
+		if ($result_bank_inc && $result_bank_dec && $result_order_update && $result_insert_tran && $result_tran_commit)
 		{
 			// Возврат списка
 			return array('result' => true, 'error' => '', 'error_arg' => '');
