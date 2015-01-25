@@ -18,8 +18,28 @@
 			</div>
 			<div class="menu">
 				<ul>
-					<li class="highlight">Разместить заказ</li>
-					<li>Меню 2</li>
+<?php
+
+// Если пользователь является Заказчиком
+if (UID && $_user && $_user['customer'])
+{
+	// Вывод специфичных элементов меню
+?>					<li class="highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+<?php
+	
+}
+
+// Если пользователь является Исполнителем
+if (UID && $_user && $_user['executor'])
+{
+	// Вывод специфичных элементов меню
+?>					<li class="highlight"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+<?php
+	
+}
+
+?>
+					<li><a href="<?=WWW?>/orders">Заказы</a></li>
 					<li><a href="<?=WWW?>/about">О проекте</a></li>
 				</ul>
 <?php

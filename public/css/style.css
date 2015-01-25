@@ -157,6 +157,12 @@ a img
 	
 }
 
+.header_frame > .header > .menu > ul > li.highlight > a
+{
+	color: white;
+	
+}
+
 .header_frame > .header > .menu:after
 {
 	clear: both;
