@@ -6,6 +6,9 @@ session_start();
 // Подключение конфигурационного файла сайта
 require_once('config.php');
 
+// Настройка локали
+setlocale(LC_ALL, LOCALE, LOCALE_ALT);
+setlocale(LC_ALL, '.' . CODEPAGE);
 // Настройка часового пояса по умолчанию
 date_default_timezone_set('UTC');
 

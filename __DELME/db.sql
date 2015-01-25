@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `oid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `customer_uid` int(10) unsigned NOT NULL,
-  `executor_uid` int(10) unsigned NOT NULL,
+  `executor_uid` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(256) NOT NULL,
   `description` text NOT NULL,
   `price` decimal(9,2) NOT NULL DEFAULT '0.00',
@@ -70,7 +70,7 @@ CREATE TABLE `users` (
   `customer` int(1) unsigned NOT NULL,
   `executor` int(1) unsigned NOT NULL,
   `bank` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `timezone` varchar(16) NOT NULL DEFAULT '+3:00',
+  `timezone` varchar(32) NOT NULL DEFAULT 'Europe/Moscow',
   `create_datetime` int(10) unsigned NOT NULL,
   `update_datetime` int(10) unsigned NOT NULL,
   `last_datetime` int(10) unsigned NOT NULL DEFAULT '0',
@@ -85,7 +85,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,0,0.00,'+3:00',1422012749,1422012749,0);
+INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,1,0.00,'+3:00',1422012749,1422012749,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -98,4 +98,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-25  1:22:20
+-- Dump completed on 2015-01-25 11:27:25

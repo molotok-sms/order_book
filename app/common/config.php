@@ -6,6 +6,9 @@
 
 // Кодовая страница сайта
 define('CODEPAGE', 'utf-8');
+// Локальные настройки сайта
+define('LOCALE', 'ru_RU');
+define('LOCALE_ALT', 'rus_RUS');
 // Максимальное время жизни сессии при простое
 define('SESSION_MAX_IDLE', 1440);
 // Домен сайта
