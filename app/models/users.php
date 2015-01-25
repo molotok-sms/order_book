@@ -87,9 +87,6 @@ function users_login ()
 	// Если пришли данные аутентификации
 	if (isset($_POST['login']) && isset($_POST['pass']))
 	{
-		// Сброс прежнего идентификатора пользователя
-		$_SESSION['uid'] = 0;
-		
 		// Формирование запроса для проверки данных
 		$query = '
 SELECT *
@@ -136,8 +133,8 @@ function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last
 	$user_email = trim($user_email);
 	
 	// Приведение к типу
-	$user_customer = (int) $user_customer;
-	$user_executor = (int) $user_executor;
+	$user_customer = ($user_customer) ? 1 : 0;
+	$user_executor = ($user_executor) ? 1 : 0;
 	
 	
 	// Проверка наличия необходимых входных данных
@@ -230,6 +227,46 @@ WHERE `uid`="' . $_SESSION['uid'] . '";
 	$result = db_query($query);
 	
 	// Возврат результата выполнения запроса
+	return ($result) ? true : false;
+	
+}
+
+
+// Функция для использования пользовательского часового пояса
+function users_use_time_zone ()
+{
+	// Проверка входных данных
+	if (!isset($_SESSION['uid']) || !is_numeric($_SESSION['uid']) || !($_SESSION['uid'] > 0)) return false;
+	
+	
+	// Формирование запроса на выборку
+	$query = '
+SELECT `time_zone`
+FROM `users`
+WHERE `uid`="' . $_SESSION['uid'] . '";
+	';
+	
+	// Выполнение запроса
+	$result = db_query($query);
+	
+	// Если выполнение запроса успешно
+	if (is_array($result) && count($result))
+	{
+		// Получение первой записи
+		$result = current($result);
+		
+		// Настройка часового пояса в PHP
+		date_default_timezone_set($result['time_zone']);
+		
+		// Формирование запроса установки часового пояса
+		$query = 'SET `time_zone`="' . date('P') . '";';
+		
+		// Выполнение запрос
+		$result = db_query($query);
+		
+	}
+	
+	// Возврат результата выполнения операции
 	return ($result) ? true : false;
 	
 }

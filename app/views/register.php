@@ -104,6 +104,7 @@ $(document).ready(function ()
 
 </script>
 <form action="https://<?=(SITE_DOMAIN . WWW)?>/register" class="register simple_page" method="post">
+	<input name="register" type="hidden" value="1">
 	<h1 class="header">Регистрация на сайте</h1>
 	<div class="content">
 		<table align="center">
@@ -137,11 +138,11 @@ $(document).ready(function ()
 			</tr>
 			<tr>
 				<td>Заказчик:</td>
-				<td><input <?=(($_data['error_field'] == 'user_customer') ? 'autofocus class="state-error"' : '')?> <?=($_data['data']['user_customer'] ? 'checked' : '')?> id="user_customer" name="user_customer" type="checkbox"></td>
+				<td><input <?=(($_data['error_field'] == 'user_customer') ? 'autofocus class="state-error"' : 'class="checkbox"')?> <?=($_data['data']['user_customer'] ? 'checked' : '')?> id="user_customer" name="user_customer" type="checkbox"></td>
 			</tr>
 			<tr>
 				<td>Исполнитель:</td>
-				<td><input <?=(($_data['error_field'] == 'user_executor') ? 'autofocus class="state-error"' : '')?> <?=($_data['data']['user_executor'] ? 'checked' : '')?> id="user_executor" name="user_executor" type="checkbox"></td>
+				<td><input <?=(($_data['error_field'] == 'user_executor') ? 'autofocus class="state-error"' : 'class="checkbox"')?> <?=($_data['data']['user_executor'] ? 'checked' : '')?> id="user_executor" name="user_executor" type="checkbox"></td>
 			</tr>
 		</table>
 		<div class="action">
