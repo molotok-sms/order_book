@@ -146,12 +146,6 @@ function controller_orders_add ()
 	$order_description	= isset($_POST['order_description']) ? $_POST['order_description'] : '';
 	$order_price		= isset($_POST['order_price']) ? $_POST['order_price'] : '';
 	
-	
-	// Экранирование входных параметров с удалением пробельных символов
-	$order_title		= htmlentities(trim($order_title), ENT_QUOTES);
-	$order_description	= htmlentities(trim($order_description), ENT_QUOTES);
-	$order_price		= htmlentities(trim($order_price), ENT_QUOTES);
-	
 	// Приведение к типу
 	$order_price = (double) str_replace(',', '.', $order_price);
 	

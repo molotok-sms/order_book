@@ -25,16 +25,6 @@ function controller_register ($params='')
 	$user_executor		= isset($_POST['user_executor']) && $_POST['user_executor'] ? 1 : 0;
 	
 	
-	// Экранирование входных параметров с удалением пробельных символов
-	$user_login			= htmlentities(trim($user_login), ENT_QUOTES);
-	$user_pass			= htmlentities(trim($user_pass), ENT_QUOTES);
-	$user_pass_confirm 	= htmlentities(trim($user_pass_confirm), ENT_QUOTES);
-	$user_last_name 	= htmlentities(trim($user_last_name), ENT_QUOTES);
-	$user_name			= htmlentities(trim($user_name), ENT_QUOTES);
-	$user_second_name 	= htmlentities(trim($user_second_name), ENT_QUOTES);
-	$user_email			= htmlentities(trim($user_email), ENT_QUOTES);
-	
-	
 	// Инициализация данных
 	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array
 	(

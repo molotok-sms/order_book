@@ -1,5 +1,20 @@
 <?php
 
+// Функция очищения входных данных
+function clean_request (&$arr)
+{
+	// Перебор всех элементов массива
+	foreach ($arr as &$val)
+	{
+		// Удаление граничных пробельных символов
+		// Преобразование символов в HTML-сущности
+		$val = htmlentities(trim($val), ENT_QUOTES);
+		
+	}
+	
+}
+
+
 // Функция форматирования даты
 function format_date ($format, $date_or_timestamp, $null_text=false)
 {

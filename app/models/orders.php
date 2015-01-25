@@ -7,6 +7,10 @@ function orders_add ($order_title, $order_description, $order_price)
 	$order_title = trim($order_title);
 	$order_description = trim($order_description);
 	
+	// Экранирование входных данных
+	$order_title = db_escape_string($order_title);
+	$order_description = db_escape_string($order_description);
+	
 	// Приведение к типу
 	$order_price = (double) $order_price;
 	
@@ -104,6 +108,10 @@ WHERE `oid` = "' . $oid . '"
 			// Перебираем поля фильтра
 			foreach ($filter as $key => $value)
 			{
+				// Экранирование входных данных
+				$key = db_escape_string($key);
+				$value = db_escape_string($value);
+				
 				// Добавление условия
 				$filter_where .= ' AND `' . $key . '`="' . $value . '"';
 				

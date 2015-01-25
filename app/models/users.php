@@ -87,6 +87,11 @@ function users_login ()
 	// Если пришли данные аутентификации
 	if (isset($_POST['login']) && isset($_POST['pass']))
 	{
+		// Экранирование входных данных
+		$_POST['login'] = db_escape_string($_POST['login']);
+		$_POST['pass'] = db_escape_string($_POST['pass']);
+		
+		
 		// Формирование запроса для проверки данных
 		$query = '
 SELECT *
@@ -131,6 +136,14 @@ function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last
 	$user_name = trim($user_name);
 	$user_second_name = trim($user_second_name);
 	$user_email = trim($user_email);
+	
+	// Экранирование входных данных
+	$user_login = db_escape_string($user_login);
+	$user_pass = db_escape_string($user_pass);
+	$user_last_name = db_escape_string($user_last_name);
+	$user_name = db_escape_string($user_name);
+	$user_second_name = db_escape_string($user_second_name);
+	$user_email = db_escape_string($user_email);
 	
 	// Приведение к типу
 	$user_customer = ($user_customer) ? 1 : 0;
