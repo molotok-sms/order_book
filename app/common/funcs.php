@@ -1,5 +1,71 @@
 <?php
 
+// Функция форматирования даты
+function format_date ($format, $date_or_timestamp, $null_text=false)
+{
+	// Определение массива названий месяцев в именительном падеже
+	$lst_search = array
+	(
+		'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+		'Friday', 'Saturday', 'Sunday',
+		'Mon', 'Tue', 'Wed', 'Thu',
+		'Fri', 'Sat', 'Sun',
+		
+		'January', 'February', 'March',
+		'April', 'May', 'June',
+		'July', 'August', 'September',
+		'October', 'November', 'December',
+		'Jan', 'Feb', 'Mar', 'Apr',
+		'May', 'Jun', 'Jul', 'Aug',
+		'Sep', 'Oct', 'Nov', 'Dec'
+		
+	);
+	
+	// Определение массива названий месяцев в родительном падеже
+	$lst_replace = array
+	(
+		'Понедельник', 'Вторник', 'Среда', 'Четверг',
+		'Пятница', 'Суббота', 'Воскресенье',
+		'Пн', 'Вт', 'Ср', 'Чт',
+		'Пт', 'Сб', 'Вс',
+		
+		'Января', 'Февраля', 'Марта',
+		'Апреля', 'Мая', 'Июня',
+		'Июля', 'Августа', 'Сентября',
+		'Октября', 'Ноября', 'Декабря',
+		'Янв', 'Фев', 'Мар',
+		'Апр', 'Мая', 'Июн',
+		'Июл', 'Авг', 'Сен',
+		'Окт', 'Ноя', 'Дек'
+		
+	);
+	
+	
+	// Если передано текстовое значение даты
+	if (!is_numeric($date_or_timestamp))
+	{
+		// Преобразование в метку времени
+		$date_or_timestamp = strtotime($date_or_timestamp);
+		
+	}
+	
+	
+	// Если дата соответствует 01.01.1970 и задан замещающий текст
+	if (!$date_or_timestamp && ($null_text !== false)) return $null_text;
+	
+	
+	// Преобразование даты
+	$date = date($format, $date_or_timestamp);
+	// Локализация
+	$date = str_replace($lst_search, $lst_replace, $date);
+	
+	
+	// Возврат результата
+	return $date;
+	
+}
+
+
 // Функция регистрации отладочных сообщений
 function print_log ($log, $text)
 {
