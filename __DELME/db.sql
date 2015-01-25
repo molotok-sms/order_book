@@ -66,14 +66,16 @@ CREATE TABLE `users` (
   `last_name` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,
   `second_name` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
   `customer` int(1) unsigned NOT NULL,
   `executor` int(1) unsigned NOT NULL,
   `bank` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `timezone` varchar(16) NOT NULL DEFAULT '+11:00',
+  `timezone` varchar(16) NOT NULL DEFAULT '+3:00',
   `create_datetime` int(10) unsigned NOT NULL,
   `update_datetime` int(10) unsigned NOT NULL,
   `last_datetime` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`uid`)
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,7 +85,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich',1,0,0.00,'+3:00',1422012749,1422012749,0);
+INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,0,0.00,'+3:00',1422012749,1422012749,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -96,4 +98,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-23 16:41:44
+-- Dump completed on 2015-01-25  1:22:20
