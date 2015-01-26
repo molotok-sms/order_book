@@ -3,6 +3,9 @@
 // Функция получения информации о пользователе или списка всех пользователей
 function users_get ($uid=false)
 {
+	// Подключение к базе данных
+	$db = db_connect(USERS_DB, false, true);
+	
 	// Если запрошена информация о конкретном пользователе
 	if (is_numeric($uid) && ($uid > 0))
 	{
@@ -16,7 +19,7 @@ SELECT
 	`customer`,
 	`executor`,
 	`bank`,
-	`timezone`,
+	`time_zone`,
 	`create_datetime` AS "create_datetime_unix",
 	`update_datetime` AS "update_datetime_unix",
 	`last_datetime` AS "last_datetime_unix",
@@ -29,7 +32,7 @@ WHERE `uid`="' . $uid . '";
 		';
 		
 		// Выполнение запроса
-		$result = db_query($query);
+		$result = db_query($query, $db);
 		
 		// Если выполнение запроса успешно
 		if (is_array($result) && count($result))
@@ -51,7 +54,7 @@ SELECT
 	`second_name`,
 	`customer`,
 	`executor`,
-	`timezone`,
+	`time_zone`,
 	`create_datetime` AS "create_datetime_unix",
 	`update_datetime` AS "update_datetime_unix",
 	`last_datetime` AS "last_datetime_unix",
@@ -63,7 +66,7 @@ FROM `users`;
 		';
 		
 		// Выполнение запроса
-		$result = db_query($query);
+		$result = db_query($query, $db);
 		
 		// Если выполнение запроса успешно
 		if (is_array($result) && count($result))
@@ -87,10 +90,12 @@ function users_login ()
 	// Если пришли данные аутентификации
 	if (isset($_POST['login']) && isset($_POST['pass']))
 	{
-		// Экранирование входных данных
-		$_POST['login'] = db_escape_string($_POST['login']);
-		$_POST['pass'] = db_escape_string($_POST['pass']);
+		// Подключение к базе данных
+		$db = db_connect(USERS_DB, false, true);
 		
+		// Экранирование входных данных
+		$_POST['login'] = db_escape_string($_POST['login'], $db);
+		$_POST['pass'] = db_escape_string($_POST['pass'], $db);
 		
 		// Формирование запроса для проверки данных
 		$query = '
@@ -101,7 +106,7 @@ WHERE `login`="' . $_POST['login'] . '"
 		';
 		
 		// Выполнение запроса
-		$result = db_query($query);
+		$result = db_query($query, $db);
 		
 		// Если выполнение запроса успешно
 		if (is_array($result) && count($result))
@@ -137,14 +142,6 @@ function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last
 	$user_second_name = trim($user_second_name);
 	$user_email = trim($user_email);
 	
-	// Экранирование входных данных
-	$user_login = db_escape_string($user_login);
-	$user_pass = db_escape_string($user_pass);
-	$user_last_name = db_escape_string($user_last_name);
-	$user_name = db_escape_string($user_name);
-	$user_second_name = db_escape_string($user_second_name);
-	$user_email = db_escape_string($user_email);
-	
 	// Приведение к типу
 	$user_customer = ($user_customer) ? 1 : 0;
 	$user_executor = ($user_executor) ? 1 : 0;
@@ -169,6 +166,18 @@ function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last
 	if (!$user_customer && !$user_executor) return array('result' => false, 'error' => 'Выберите хотя бы что-то одно: Заказчик или Исполнитель', 'error_arg' => 'user_executor');
 	
 	
+	// Подключение к базе данных
+	$db = db_connect(USERS_DB, false, true);
+	
+	// Экранирование входных данных
+	$user_login = db_escape_string($user_login, $db);
+	$user_pass = db_escape_string($user_pass, $db);
+	$user_last_name = db_escape_string($user_last_name, $db);
+	$user_name = db_escape_string($user_name, $db);
+	$user_second_name = db_escape_string($user_second_name, $db);
+	$user_email = db_escape_string($user_email, $db);
+	
+	
 	// Формирование запроса на выборку
 	$query = '
 SELECT COUNT(*) AS "count"
@@ -177,7 +186,7 @@ WHERE `login`="' . $user_login . '";
 	';
 	
 	// Выполнение запроса
-	$result = db_query($query);
+	$result = db_query($query, $db);
 	
 	// Если выполнение запроса успешно
 	if (is_array($result) && count($result))
@@ -207,7 +216,7 @@ VALUES ("' . $user_login . '", sha2("' . $user_pass . '", 256), "' . $user_last_
 	';
 	
 	// Выполнение запроса
-	$result = db_query($query);
+	$result = db_query($query, $db);
 	
 	// Если выполнение запроса успешно
 	if ($result)
@@ -229,6 +238,9 @@ function users_update_last_datetime ()
 	// Проверка входных данных
 	if (!isset($_SESSION['uid']) || !is_numeric($_SESSION['uid']) || !($_SESSION['uid'] > 0)) return false;
 	
+	// Подключение к базе данных
+	$db = db_connect(USERS_DB, false, true);
+	
 	// Формирование запроса обновления
 	$query = '
 UPDATE `users`
@@ -237,7 +249,7 @@ WHERE `uid`="' . $_SESSION['uid'] . '";
 	';
 	
 	// Выполнение запроса
-	$result = db_query($query);
+	$result = db_query($query, $db);
 	
 	// Возврат результата выполнения запроса
 	return ($result) ? true : false;
@@ -251,6 +263,8 @@ function users_use_time_zone ()
 	// Проверка входных данных
 	if (!isset($_SESSION['uid']) || !is_numeric($_SESSION['uid']) || !($_SESSION['uid'] > 0)) return false;
 	
+	// Подключение к базе данных
+	$db = db_connect(USERS_DB, false, true);
 	
 	// Формирование запроса на выборку
 	$query = '
@@ -260,7 +274,7 @@ WHERE `uid`="' . $_SESSION['uid'] . '";
 	';
 	
 	// Выполнение запроса
-	$result = db_query($query);
+	$result = db_query($query, $db);
 	
 	// Если выполнение запроса успешно
 	if (is_array($result) && count($result))
@@ -275,7 +289,7 @@ WHERE `uid`="' . $_SESSION['uid'] . '";
 		$query = 'SET `time_zone`="' . date('P') . '";';
 		
 		// Выполнение запрос
-		$result = db_query($query);
+		$result = db_query($query, $db);
 		
 	}
 	
