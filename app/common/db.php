@@ -63,7 +63,7 @@ function db_connect ($connection_string, $fglobal=true, $fpool=false)
 		$db_link = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname'], $params['port']);
 		
 		// Настройка кодировки подключения к Базе Данных
-		if ($db_link) db_set_encoding($params['codepage']);
+		if ($db_link) db_set_encoding($params['codepage'], $db_link);
 		
 		// Если запрошено использование пула
 		if ($fpool)
