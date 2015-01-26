@@ -36,6 +36,9 @@ function db_connect ($connection_string, $fglobal=true, $fpool=false)
 	// Инициализация пула подключений (используется только в рамках работы одной копии скрипта)
 	if (!isset($_db_pool)) $_db_pool = array();
 	
+	// Макро-подстановка
+	$connection_string = str_replace('%common%', DB, $connection_string);
+	
 	// Если запрошено использование пула, такое подключение уже имеется и активно
 	if ($fpool && isset($_db_pool[$connection_string]) && $_db_pool[$connection_string]->ping())
 	{

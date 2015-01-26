@@ -15,7 +15,7 @@ date_default_timezone_set('UTC');
 // Подключение оболочки Базы Данных
 require_once(APP . '/common/db.php');
 // Подключение к Базе Данных
-db_connect(DB);
+//db_connect(DB);
 
 // Настройка кодировки страниц
 header('Content-type: text/html; charset=' . CODEPAGE);
