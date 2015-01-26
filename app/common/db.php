@@ -28,26 +28,44 @@ function db_affected_rows ($db_link=false)
 
 
 // Функция для подключения к Базе Данных
-function db_connect ($connection_string, $fglobal=true)
+function db_connect ($connection_string, $fglobal=true, $fpool=false)
 {
 	global $_db;
+	global $_db_pool;
 	
-	// Разбор строки подключения на массив параметров
-	parse_str(str_replace(' ', '&', $connection_string), $params);
+	// Инициализация пула подключений (используется только в рамках работы одной копии скрипта)
+	if (!isset($_db_pool)) $_db_pool = array();
 	
-	// Дополнение параметрами по умолчанию
-	if (!isset($params['host'])) $params['host'] = 'localhost';
-	if (!isset($params['port'])) $params['port'] = '3306';
-	if (!isset($params['user'])) $params['user'] = 'root';
-	if (!isset($params['password'])) $params['password'] = '';
-	if (!isset($params['dbname'])) $params['dbname'] = 'mysql';
-	if (!isset($params['codepage'])) $params['codepage'] = 'utf8';
-	
-	// Подключение к Базе Данных
-	$db_link = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname'], $params['port']);
-	
-	// Настройка кодировки подключения к Базе Данных
-	if ($db_link) db_set_encoding($params['codepage']);
+	// Если запрошено использование пула, такое подключение уже имеется и активно
+	if ($fpool && isset($_db_pool[$connection_string]) && $_db_pool[$connection_string]->ping())
+	{
+		// Получение текущего подключения
+		$db_link = $_db_pool[$connection_string];
+		
+	}
+	else
+	{
+		// Разбор строки подключения на массив параметров
+		parse_str(str_replace(' ', '&', $connection_string), $params);
+		
+		// Дополнение параметрами по умолчанию
+		if (!isset($params['host'])) $params['host'] = 'localhost';
+		if (!isset($params['port'])) $params['port'] = '3306';
+		if (!isset($params['user'])) $params['user'] = 'root';
+		if (!isset($params['password'])) $params['password'] = '';
+		if (!isset($params['dbname'])) $params['dbname'] = 'mysql';
+		if (!isset($params['codepage'])) $params['codepage'] = 'utf8';
+		
+		// Подключение к Базе Данных
+		$db_link = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname'], $params['port']);
+		
+		// Настройка кодировки подключения к Базе Данных
+		if ($db_link) db_set_encoding($params['codepage']);
+		
+		// Если запрошено использование пула, сохраняем подключение в пул
+		if ($fpool) $_db_pool[$connection_string] = $db_link;
+		
+	}
 	
 	// Если требуется, то сохраняем идентификатор подключения глобально
 	if ($fglobal) $_db = $db_link;
