@@ -1,5 +1,9 @@
 <?php
 
+// Создание константы для флага отладки
+define('DB_DEBUG_QUERY', false);
+
+
 // Функция для получения кол-ва обработанных записей
 function db_affected_rows ($db_link=false)
 {
@@ -208,6 +212,7 @@ function db_last_insert_id ($db_link=false)
 function db_query ($query, $db_link=false)
 {
 	global $_db;
+	global $_db_pool;
 	
 	// Если ID подключения не передан
 	if (!$db_link)
@@ -250,6 +255,25 @@ function db_query ($query, $db_link=false)
 		
 		// Возврат результата
 		return $result;
+		
+	}
+	
+	// Если включена отладка запросов
+	if (defined('DB_DEBUG_QUERY') && DB_DEBUG_QUERY)
+	{
+		//
+		// Вывод ошибки в лог-файл
+		//
+		
+		print_log('error', 'Error query:');
+		
+		ob_start();
+		var_dump($query);
+		print_log('error', ob_get_contents());
+		ob_end_clean();
+		
+		print_log('error', 'MySQLi pool: ' . (is_array($_db_pool) ? count($_db_pool) : 0));
+		print_log('error', 'MySQLi error: ' . db_error_string($db_link));
 		
 	}
 	
