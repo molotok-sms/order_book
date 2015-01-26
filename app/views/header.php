@@ -1,4 +1,4 @@
-<?php if (!$_header) return; ?>
+<?php if (isset($_header) && !$_header) return; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +6,7 @@
 <link href="<?=WWW?>/public/css/style.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="content-type" content="text/html;charset=<?=CODEPAGE?>">
 <script language="javascript" src="<?=WWW?>/public/js/jquery.min.js"></script>
-<title><?=(($_header_title != '') ? $_header_title . ' :: ' : '')?>Система размещения заказов</title>
+<title><?=((isset($_header_title) && ($_header_title != '')) ? $_header_title . ' :: ' : '')?>Система размещения заказов</title>
 </head>
 <body>
 	<div class="header_frame">
