@@ -133,10 +133,11 @@ a img
 
 .header_frame > .header > .menu > ul
 {
+	float: left;
 	font-family: Verdana;
 	font-size: 0.8em;
 	margin: 0px;
-	padding: 0px 10px;
+	padding: 10px 0px;
 	
 }
 
@@ -145,34 +146,32 @@ a img
 	cursor: pointer;
 	float: left;
 	list-style: none;
-	margin: 5px;
-	padding: 10px 20px;
-	
-}
-
-.header_frame > .header > .menu > ul > li.highlight
-{
-	background-color: #00B945;
-	border-radius: 2px;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-	color: white;
-	font-weight: bold;
+	padding: 5px;
 	
 }
 
 .header_frame > .header > .menu > ul > li > a
 {
 	color: black;
+	padding: 10px 20px;
 	text-decoration: none;
 	
 }
 
 .header_frame > .header > .menu > ul > li.highlight > a
 {
+	background-color: #00B945;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 	color: white;
+	font-family: Verdana;
+	font-size: 1em;
+	font-weight: bold;
+	text-decoration: none;
 	
 }
 
+.header_frame > .header > .menu > ul:after,
 .header_frame > .header > .menu:after
 {
 	clear: both;
