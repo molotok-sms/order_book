@@ -65,7 +65,9 @@ CREATE TABLE `transactions` (
   `tid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `oid` int(10) unsigned NOT NULL,
   `percent` decimal(9,2) NOT NULL,
+  `executed` int(1) unsigned NOT NULL DEFAULT '0',
   `create_datetime` int(10) unsigned NOT NULL,
+  `update_datetime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`tid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -97,7 +99,7 @@ CREATE TABLE `users` (
   `customer` int(1) unsigned NOT NULL,
   `executor` int(1) unsigned NOT NULL,
   `bank` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `timezone` varchar(32) NOT NULL DEFAULT 'Europe/Moscow',
+  `time_zone` varchar(32) NOT NULL DEFAULT 'Europe/Moscow',
   `create_datetime` int(10) unsigned NOT NULL,
   `update_datetime` int(10) unsigned NOT NULL,
   `last_datetime` int(10) unsigned NOT NULL DEFAULT '0',
