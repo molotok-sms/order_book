@@ -26,8 +26,20 @@ define('WWW', '');
 //
 // Настройки подключения к БД
 //
+// - если в имени хоста добавить в начале "p:", то будут использоваться постоянные подключения
+// - если для разных таблиц указаны одинаковые параметры подключения (бинарно точно или использование макроса %common%),
+//   будет использоваться одно подключение
+//
 
+// Общие настройки, подставляются при использовании макроса %common%
 define('DB', 'host=localhost port=3306 user=order_book password=a6WyYSvq5y dbname=order_book codepage=utf8');
+
+// БД для хранения таблицы `orders`
+define('ORDERS_DB', 'host=localhost port=3306 user=order_book password=a6WyYSvq5y dbname=order_book codepage=utf8');
+// БД для хранения таблицы `transaction`
+define('TRAN_DB', 'host=localhost port=3306 user=order_book password=a6WyYSvq5y dbname=order_book codepage=utf8');
+// БД для хранения таблицы `users`
+define('USERS_DB', '%common%');
 
 
 //

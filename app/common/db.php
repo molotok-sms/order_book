@@ -62,13 +62,22 @@ function db_connect ($connection_string, $fglobal=true, $fpool=false)
 		// Настройка кодировки подключения к Базе Данных
 		if ($db_link) db_set_encoding($params['codepage']);
 		
-		// Если запрошено использование пула, сохраняем подключение в пул
-		if ($fpool) $_db_pool[$connection_string] = $db_link;
+		// Если запрошено использование пула
+		if ($fpool)
+		{
+			// Сохранение подключения в пул
+			$_db_pool[$connection_string] = $db_link;
+			
+		}
+		// Иначе, если требуется хранить ID подключения глобально
+		elseif ($fglobal)
+		{
+			// Сохранение идентификатора подключения глобально
+			$_db = $db_link;
+			
+		}
 		
 	}
-	
-	// Если требуется, то сохраняем идентификатор подключения глобально
-	if ($fglobal) $_db = $db_link;
 	
 	// Возврат результата
 	return $db_link;
