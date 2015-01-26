@@ -41,9 +41,13 @@ function db_connect ($connection_string, $fglobal=true)
 	if (!isset($params['user'])) $params['user'] = 'root';
 	if (!isset($params['password'])) $params['password'] = '';
 	if (!isset($params['dbname'])) $params['dbname'] = 'mysql';
+	if (!isset($params['codepage'])) $params['codepage'] = 'utf8';
 	
 	// Подключение к Базе Данных
 	$db_link = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname'], $params['port']);
+	
+	// Настройка кодировки подключения к Базе Данных
+	if ($db_link) db_set_encoding($params['codepage']);
 	
 	// Если требуется, то сохраняем идентификатор подключения глобально
 	if ($fglobal) $_db = $db_link;

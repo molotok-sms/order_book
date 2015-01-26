@@ -15,9 +15,7 @@ date_default_timezone_set('UTC');
 // Подключение оболочки Базы Данных
 require_once(APP . '/common/db.php');
 // Подключение к Базе Данных
-db_connect('host=' . DB_HOST . ' port=' . DB_PORT . ' user=' . DB_USER . ' password=' . DB_PASS . ' dbname=' . DB_NAME);
-// Настройка кодировки подключения к Базе Данных
-db_set_encoding(DB_CODEPAGE);
+db_connect(DB);
 
 // Настройка кодировки страниц
 header('Content-type: text/html; charset=' . CODEPAGE);

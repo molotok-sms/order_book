@@ -27,13 +27,7 @@ define('WWW', '');
 // Настройки подключения к БД
 //
 
-define('DB_HOST', 'localhost');
-define('DB_PORT', '3306');
-define('DB_NAME', 'order_book');
-define('DB_USER', 'order_book');
-define('DB_PASS', 'a6WyYSvq5y');
-define('DB_PREFIX', '');
-define('DB_CODEPAGE', 'utf8');
+define('DB', 'host=localhost port=3306 user=order_book password=a6WyYSvq5y dbname=order_book codepage=utf8');
 
 
 //
