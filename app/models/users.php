@@ -222,7 +222,7 @@ VALUES ("' . $user_login . '", sha2("' . $user_pass . '", 256), "' . $user_last_
 	if ($result)
 	{
 		// Возврат идентификатора вставленной записи
-		return array('result' => db_last_insert_id(), 'error' => '', 'error_arg' => '');
+		return array('result' => db_last_insert_id($db), 'error' => '', 'error_arg' => '');
 		
 	}
 	

@@ -150,6 +150,9 @@ function controller_orders_add ()
 	$order_price = (double) str_replace(',', '.', $order_price);
 	
 	
+	// Инициализация переменной
+	$result = array('result' => false);
+	
 	// Инициализация данных
 	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array
 	(

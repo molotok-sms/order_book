@@ -38,7 +38,7 @@ VALUES ("' . UID . '", "' . $order_title . '", "' . $order_description . '", "' 
 	if ($result)
 	{
 		// Возврат идентификатора вставленной записи
-		return array('result' => db_last_insert_id(), 'error' => '', 'error_arg' => '');
+		return array('result' => db_last_insert_id($db), 'error' => '', 'error_arg' => '');
 		
 	}
 	
