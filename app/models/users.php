@@ -87,22 +87,25 @@ FROM `users`;
 // Функция проверки запроса и аутентификации пользователя
 function users_login ()
 {
+	// Получение POST-параметров
+	$user_login = isset($_POST['login']) ? $_POST['login'] : '';
+	$user_pass = isset($_POST['pass']) ? $_POST['pass'] : '';
+	
+	
 	// Если пришли данные аутентификации
-	if (isset($_POST['login']) && isset($_POST['pass']))
+	if ($user_login && $user_pass)
 	{
 		// Подключение к базе данных
 		$db = db_connect(USERS_DB, false, true);
 		
 		// Экранирование входных данных
-		$_POST['login'] = db_escape_string($_POST['login'], $db);
-		$_POST['pass'] = db_escape_string($_POST['pass'], $db);
+		$user_login = db_escape_string($user_login, $db);
 		
-		// Формирование запроса для проверки данных
+		// Формирование запроса для выборки
 		$query = '
 SELECT *
 FROM `users`
-WHERE `login`="' . $_POST['login'] . '"
-	AND `pass`=sha2("' . $_POST['pass'] . '", 256);
+WHERE `login`="' . $user_login . '";
 		';
 		
 		// Выполнение запроса
@@ -114,8 +117,13 @@ WHERE `login`="' . $_POST['login'] . '"
 			// Получение первой записи
 			$result = current($result);
 			
-			// Возврат идентификатора пользователя
-			return $result['uid'];
+			// Если пароль проходит проверку по хешу
+			if (password_verify($user_pass, $result['pass']))
+			{
+				// Возврат идентификатора пользователя
+				return $result['uid'];
+				
+			}
 			
 		}
 		
@@ -131,7 +139,7 @@ WHERE `login`="' . $_POST['login'] . '"
 
 
 // Функция регистрации нового пользователя
-function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last_name, $user_name, $user_second_name, $user_email, $user_customer, $user_executor, $fconfirm=false)
+function users_register ($user_login, &$user_pass, $user_pass_confirm, $user_last_name, $user_name, $user_second_name, $user_email, $user_customer, $user_executor, $fconfirm=false)
 {
 	// Удаление крайних пробелов
 	$user_login = trim($user_login);
@@ -164,6 +172,16 @@ function users_register ($user_login, $user_pass, $user_pass_confirm, $user_last
 	
 	// Проверка выбора хотя бы чего-то одного: Заказчик или Исполнитель
 	if (!$user_customer && !$user_executor) return array('result' => false, 'error' => 'Выберите хотя бы что-то одно: Заказчик или Исполнитель', 'error_arg' => 'user_executor');
+	
+	
+	// Если подтверждение регистрации не дано
+	if (!$fconfirm)
+	{
+		// Вычисление хеша пароля (до вызова db_escape_string!)
+		// (он будет возвращен для сохранения в сессии для подтверждения регистрации)
+		$user_pass = password_hash($user_pass, PASSWORD_BCRYPT);
+		
+	}
 	
 	
 	// Подключение к базе данных
@@ -212,7 +230,7 @@ WHERE `login`="' . $user_login . '";
 	$query = '
 INSERT INTO `users`
 (`login`, `pass`, `last_name`, `name`, `second_name`, `email`, `customer`, `executor`, `create_datetime`, `update_datetime`)
-VALUES ("' . $user_login . '", sha2("' . $user_pass . '", 256), "' . $user_last_name . '", "' . $user_name . '", "' . $user_second_name . '", "' . $user_email . '", "' . $user_customer . '", "' . $user_executor . '", UNIX_TIMESTAMP(), UNIX_TIMESTAMP());
+VALUES ("' . $user_login . '", "' . $user_pass . '", "' . $user_last_name . '", "' . $user_name . '", "' . $user_second_name . '", "' . $user_email . '", "' . $user_customer . '", "' . $user_executor . '", UNIX_TIMESTAMP(), UNIX_TIMESTAMP());
 	';
 	
 	// Выполнение запроса

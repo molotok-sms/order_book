@@ -29,8 +29,8 @@ function controller_register ($params='')
 	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array
 	(
 		'user_login' => $user_login,
-		'user_pass' => $user_pass,
-		'user_pass_confirm' => $user_pass_confirm,
+		'user_pass' => '',
+		'user_pass_confirm' => '',
 		'user_last_name' => $user_last_name,
 		'user_name' => $user_name,
 		'user_second_name' => $user_second_name,
@@ -44,7 +44,16 @@ function controller_register ($params='')
 	// Если есть данные
 	if ($fdata)
 	{
+		// Если дано подтверждение регистрации и в сессии сохранен хеш пароля
+		if ($fconfirm && isset($_SESSION['user_pass']))
+		{
+			// Получение из сессии пароля сохраненного перед подтверждением
+			$user_pass = $user_pass_confirm = $_SESSION['user_pass'];
+			
+		}
+		
 		// Регистрация пользователя
+		// ($user_pass вернется захешированным)
 		$result = users_register($user_login, $user_pass, $user_pass_confirm, $user_last_name, $user_name, $user_second_name, $user_email, $user_customer, $user_executor, $fconfirm);
 		
 		// Сохранение текста ошибки
@@ -54,6 +63,9 @@ function controller_register ($params='')
 		
 	}
 	
+	
+	// Удаление хешированных паролей из сессии
+	$_SESSION['user_pass'] = '';
 	
 	// Если нет данных или произошла ошибка регистрации пользователя
 	if (!$fdata || !$result['result'])
@@ -70,6 +82,9 @@ function controller_register ($params='')
 	{
 		// Формирование данных
 		$_data['status'] = true;
+		
+		// Сохранение хешированного пароля в сессии
+		$_SESSION['user_pass'] = $user_pass;
 		
 		// Если это AJAX-запрос, отключение вывода колонтитулов
 		if ($fajax) $_header = false;

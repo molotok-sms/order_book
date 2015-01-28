@@ -19,7 +19,9 @@ require_once(APP . '/common/db.php');
 
 // Настройка кодировки страниц
 header('Content-type: text/html; charset=' . CODEPAGE);
-// Настройка доступа с HTTP части сайта к HTTPS части (для отправки форм через HTTPS)
+// Разрешение отправки клиентом cookies и данных аутентифицкаии (для отправки форм через HTTPS)
+header('Access-Control-Allow-Credentials: true');
+// Разрешение отправки HTTP-запросов (для отправки форм через HTTPS)
 header('Access-Control-Allow-Origin: http://' . SITE_DOMAIN);
 
 

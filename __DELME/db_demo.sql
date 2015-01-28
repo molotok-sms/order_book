@@ -106,7 +106,7 @@ CREATE TABLE `users` (
   `last_datetime` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,1,20000.00,'Europe/Moscow',1422012749,1422012749,1422221048),(2,'exe','9095bdb859308b62acf04036ffd4adfe366d7f737d276eb6c46ae434f3816c9b','exe','exe','exe','exe@exe',0,1,0.00,'Europe/Moscow',1422207320,1422207320,1422219367);
+INSERT INTO `users` VALUES (1,'molotok','$2y$10$J3sKMAuTBe5zIJyofB5pr.qeznjcSDcwh9llzczNUnFrbfQnALyE2','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,1,20000.00,'Europe/Moscow',1422012749,1422012749,1422482218),(2,'customer','$2y$10$COMTyu6SKueBxnBqjU4de.LMRYyVV4xomfPoC2a.GUwSa/3h56jHS','Customer','Customer','Customer','customer@test',1,0,20000.00,'Europe/Moscow',1422482318,1422482318,0),(3,'executor','$2y$10$O0lU8NCPRSsuU0sYl8Ha6eQNoYTHNcXl9GeA.IG/vDrSduwGp.yWi','Executor','Executor','Executor','executor@test',0,1,0.00,'Europe/Moscow',1422482372,1422482372,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -128,4 +128,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-26  1:03:58
+-- Dump completed on 2015-01-29  0:59:55

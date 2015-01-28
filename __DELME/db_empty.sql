@@ -114,7 +114,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'molotok','02864008d37c5502a288441166285cedaa4a8c7f66c086a2f9fc6ebda6a3cf53','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,1,8500.00,'Europe/Moscow',1422012749,1422012749,1422221048);
+INSERT INTO `users` VALUES (1,'molotok','$2y$10$J3sKMAuTBe5zIJyofB5pr.qeznjcSDcwh9llzczNUnFrbfQnALyE2','Konshin','Alexey','Vladimirovich','alexey@konshin.ru',1,1,8500.00,'Europe/Moscow',1422012749,1422012749,1422221048);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

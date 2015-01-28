@@ -45,8 +45,6 @@ $(document).ready(function ()
 <form action="https://<?=(SITE_DOMAIN . WWW)?>/register/confirm" class="register simple_page" method="post">
 	<input name="register" type="hidden" value="1">
 	<input name="user_login" type="hidden" value="<?=$_data['data']['user_login']?>">
-	<input name="user_pass" type="hidden" value="<?=$_data['data']['user_pass']?>">
-	<input name="user_pass_confirm" type="hidden" value="<?=$_data['data']['user_pass_confirm']?>">
 	<input name="user_last_name" type="hidden" value="<?=$_data['data']['user_last_name']?>">
 	<input name="user_name" type="hidden" value="<?=$_data['data']['user_name']?>">
 	<input name="user_second_name" type="hidden" value="<?=$_data['data']['user_second_name']?>">
