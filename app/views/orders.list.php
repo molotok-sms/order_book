@@ -43,7 +43,7 @@ elseif (!count($_data['data']))
 else
 {
 	// Вывод панели навигации по страницам
-?><div class="pager">
+?><div class="pager" <?=((count($_data['pages']) <= 1) ? 'style="display: none;"' : '')?>>
 <?php
 	
 	// Перебор доступных номеров страниц
@@ -117,7 +117,7 @@ else
 	
 	
 	// Вывод панели навигации по страницам
-?><div class="pager">
+?><div class="pager" <?=((count($_data['pages']) <= 1) ? 'style="display: none;"' : '')?>>
 <?php
 	
 	// Перебор доступных номеров страниц

@@ -12,58 +12,32 @@ $(document).ready(function ()
 {
 	$('form.login').on('submit', function (e)
 	{
-		var login = $(this).find('#login');
-		var pass = $(this).find('#pass');
+		var login = this.elements['login'];
+		var pass = this.elements['pass'];
 		var err = 0;
 		
-		$('.error_string').hide();
-		$('.error_string').text('');
+		e.preventDefault();
 		
-		pass.removeClass('state-error');
-		login.removeClass('state-error');
+		$('.error_string').hide().text('');
 		
-		if (pass.val().trim() == '') { pass.addClass('state-error'); pass.focus(); err++; }
-		if (login.val().trim() == '') { login.addClass('state-error'); login.focus(); err++; }
-		
+		$('input.state-error').removeClass('state-error');
+		if (!pass.value.trim()) { $(pass).addClass('state-error').focus(); err++; }
+		if (!login.value.trim()) { $(login).addClass('state-error').focus(); err++; }
 		if (err) return false;
 		
 		
-		$.ajax
-		({
-			data: { ajax: 1, login: login.val().trim(), pass: pass.val().trim() },
-			error: function (jqXHR, textStatus, errorThrown)
+		form_ajax_submit({ form: this, action: '', data: { ajax: 1 }, error: '.error_string', callback: function (data)
+		{
+			if (data.toString().indexOf('redirect') >= 0)
 			{
-				$('.error_string').text('Ошибка обращения к серверу!');
-				$('.error_string').show();
+				location.href = $('.go_main_page').attr('href');
+				return;
 				
-			},
-			success: function (data, textStatus)
-			{
-				if (textStatus != 'success')
-				{
-					$('.error_string').text('Ошибка выполнения запроса!');
-					$('.error_string').show();
-					return;
-					
-				}
-				
-				if (data.toString().indexOf('redirect') >= 0)
-				{
-					location.href = $('.go_main_page').attr('href');
-					return;
-					
-				}
-				
-				$('.error_string').text(data);
-				$('.error_string').show();
-				
-			},
-			timeout: 15000,
-			type: 'POST'
+			}
 			
-		});
-		
-		return false;
+			$('.error_string').text(data).show();
+			
+		}});
 		
 	});
 	
@@ -73,8 +47,8 @@ $(document).ready(function ()
 <form action="https://<?=(SITE_DOMAIN . WWW)?>/login/" class="login simple_page" method="post">
 	<h1 class="header">Вход на сайт</h1>
 	<div class="content">
-		<p><input autofocus id="login" placeholder="Имя пользователя" name="login" value="<?=$_data['data']['login']?>"></p>
-		<p><input id="pass" placeholder="Пароль" name="pass" type="password" value=""></p>
+		<p><input autofocus maxlength=32 name="login" placeholder="Имя пользователя" value="<?=$_data['data']['login']?>"></p>
+		<p><input maxlength=20 name="pass" placeholder="Пароль" type="password" value=""></p>
 		<div class="action">
 			<input class="button" type="submit" value="Войти" />
 			<a href="<?=WWW?>/register">Регистрация</a>

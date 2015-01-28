@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `login` varchar(16) NOT NULL,
+  `login` varchar(32) NOT NULL,
   `pass` varchar(64) NOT NULL,
   `last_name` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,

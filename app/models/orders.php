@@ -411,7 +411,7 @@ function orders_go ($oid)
 	
 	
 	// Отладка функции
-	$debug = true;
+	$debug = false;
 	
 	
 	/*

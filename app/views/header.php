@@ -6,6 +6,7 @@
 <link href="<?=WWW?>/public/css/style.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="content-type" content="text/html;charset=<?=CODEPAGE?>">
 <script language="javascript" src="<?=WWW?>/public/js/jquery.min.js"></script>
+<script language="javascript" src="<?=WWW?>/public/js/common.js"></script>
 <title><?=((isset($_header_title) && ($_header_title != '')) ? $_header_title . ' :: ' : '')?>Система размещения заказов</title>
 </head>
 <body>

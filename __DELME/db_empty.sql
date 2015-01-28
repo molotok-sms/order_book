@@ -36,7 +36,7 @@ CREATE TABLE `orders` (
   `executor_uid` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(256) NOT NULL,
   `description` text NOT NULL,
-  `price` decimal(9,2) NOT NULL DEFAULT '0.00',
+  `price` decimal(11,2) NOT NULL DEFAULT '0.00',
   `create_datetime` int(10) unsigned NOT NULL,
   `update_datetime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`oid`),
@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `tid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `oid` int(10) unsigned NOT NULL,
-  `percent` decimal(9,2) NOT NULL,
+  `percent` decimal(11,2) NOT NULL,
   `executed` int(1) unsigned NOT NULL DEFAULT '0',
   `create_datetime` int(10) unsigned NOT NULL,
   `update_datetime` int(10) unsigned NOT NULL,
@@ -90,7 +90,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `login` varchar(16) NOT NULL,
+  `login` varchar(32) NOT NULL,
   `pass` varchar(64) NOT NULL,
   `last_name` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,

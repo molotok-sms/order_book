@@ -10,78 +10,32 @@ require('header.php');
 
 $(document).ready(function ()
 {
-	var data = { ajax: 1, register: 1, user_executor: '<?=$_data['data']['user_executor']?>', user_customer: '<?=$_data['data']['user_customer']?>', user_email: '<?=$_data['data']['user_email']?>', user_second_name: '<?=$_data['data']['user_second_name']?>', user_name: '<?=$_data['data']['user_name']?>', user_last_name: '<?=$_data['data']['user_last_name']?>', user_pass_confirm: '<?=$_data['data']['user_pass_confirm']?>', user_pass: '<?=$_data['data']['user_pass']?>', user_login: '<?=$_data['data']['user_login']?>' };
-	
 	$('form.register').on('submit', function (e)
 	{
-		$.ajax
-		({
-			data: data,
-			error: function (jqXHR, textStatus, errorThrown)
-			{
-				$('.error_string').text('Ошибка обращения к серверу!');
-				$('.error_string').show();
-				
-			},
-			success: function (data, textStatus)
-			{
-				if (textStatus != 'success')
-				{
-					$('.error_string').text('Ошибка выполнения запроса!');
-					$('.error_string').show();
-					return;
-					
-				}
-				
-				$('.main_frame').html(data);
-				window.scrollTo(0, 0);
-				
-			},
-			timeout: 15000,
-			type: 'POST',
-			url: $(this).attr('action')
-			
-		});
+		e.preventDefault();
 		
-		return false;
+		form_ajax_submit({ form: this, data: { ajax: 1 }, error: '.error_string', content: '.main_frame', callback: function (data)
+		{
+			window.scrollTo(0, 0);
+			
+		}});
 		
 	});
 	
 	$('#go_back').get(0).onclick = '';
 	$('#go_back').on('click', function (e)
 	{
-		data['register'] = 0;
+		e.preventDefault();
 		
-		$.ajax
-		({
-			data: data,
-			error: function (jqXHR, textStatus, errorThrown)
-			{
-				$('.error_string').text('Ошибка обращения к серверу!');
-				$('.error_string').show();
-				
-			},
-			success: function (data, textStatus)
-			{
-				if (textStatus != 'success')
-				{
-					$('.error_string').text('Ошибка выполнения запроса!');
-					$('.error_string').show();
-					return;
-					
-				}
-				
-				$('.main_frame').html(data);
-				window.scrollTo(0, 0);
-				
-			},
-			timeout: 15000,
-			type: 'POST',
-			url: 'https://<?=(SITE_DOMAIN . WWW)?>/register'
+		var d = get_form_data(this.form);
+		d['ajax'] = 1;
+		d['register'] = 0;
+		
+		form_ajax_submit({ form: this, action: 'https://<?=(SITE_DOMAIN . WWW)?>/register', data: d, form_data: false, error: '.error_string', content: '.main_frame', callback: function (data)
+		{
+			window.scrollTo(0, 0);
 			
-		});
-		
-		return false;
+		}});
 		
 	});
 	
@@ -89,6 +43,16 @@ $(document).ready(function ()
 
 </script>
 <form action="https://<?=(SITE_DOMAIN . WWW)?>/register/confirm" class="register simple_page" method="post">
+	<input name="register" type="hidden" value="1">
+	<input name="user_login" type="hidden" value="<?=$_data['data']['user_login']?>">
+	<input name="user_pass" type="hidden" value="<?=$_data['data']['user_pass']?>">
+	<input name="user_pass_confirm" type="hidden" value="<?=$_data['data']['user_pass_confirm']?>">
+	<input name="user_last_name" type="hidden" value="<?=$_data['data']['user_last_name']?>">
+	<input name="user_name" type="hidden" value="<?=$_data['data']['user_name']?>">
+	<input name="user_second_name" type="hidden" value="<?=$_data['data']['user_second_name']?>">
+	<input name="user_email" type="hidden" value="<?=$_data['data']['user_email']?>">
+	<input name="user_customer" type="hidden" value="<?=$_data['data']['user_customer']?>">
+	<input name="user_executor" type="hidden" value="<?=$_data['data']['user_executor']?>">
 	<h1 class="header">Подтверждение регистрации</h1>
 	<div class="content">
 		<table align="center">
