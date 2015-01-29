@@ -33,6 +33,8 @@ function controller_orders ($params)
 	{
 		// Настройка заголовка страницы
 		$_header_title = 'История заказов';
+		// Настройка адреса текущей страницы
+		$_page = 'orders/go';
 		
 		// Настраиваем фильтр "только выполненные мною заказы"
 		$filter = array('executor_uid' => UID);
@@ -53,6 +55,8 @@ function controller_orders ($params)
 	{
 		// Настройка заголовка страницы
 		$_header_title = '';
+		// Настройка адреса текущей страницы
+		$_page = 'orders';
 		
 		// Удаляем первый параметр
 		array_shift($params);
@@ -63,12 +67,22 @@ function controller_orders ($params)
 	{
 		// Настройка заголовка страницы
 		$_header_title = 'Мои заказы';
+		// Настройка адреса текущей страницы
+		$_page = 'orders/my';
 		
 		// Настраиваем фильтр "выводить только мои заказы"
 		$filter = array('customer_uid' => UID);
 		
 		// Удаляем первый параметр
 		array_shift($params);
+		
+	}
+	else
+	{
+		// Настройка заголовка страницы
+		$_header_title = '';
+		// Настройка адреса текущей страницы
+		$_page = 'orders';
 		
 	}
 	
@@ -180,6 +194,9 @@ function controller_orders_add ()
 	// Если нет действия или произошла ошибка размещения заказа
 	if (!$faction || !$result['result'])
 	{
+		// Настройка адреса текущей страницы
+		$_page = 'orders/add';
+		
 		// Если это AJAX-запрос, отключение вывода колонтитулов
 		if ($fajax) $_header = false;
 		
@@ -262,6 +279,9 @@ function controller_orders_item ($oid, $action='')
 		
 	}
 	
+	
+	// Настройка адреса текущей страницы
+	$_page = 'orders/item';
 	
 	// Если это AJAX-запрос, отключение вывода колонтитулов
 	if ($fajax) $_header = false;

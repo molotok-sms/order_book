@@ -24,36 +24,38 @@ $c = (UID && $_user && $_user['customer']);
 // Флаг "Исполнитель"
 $e = (UID && $_user && $_user['executor']);
 
+// Инициализация переменной
+if (!isset($_page)) $_page = '';
 
 if ($c && $e)
 {
-?>					<li class="highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
-					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
-					<li><a href="<?=WWW?>/orders/go">История заказов</a></li>
+?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/go">История заказов</a></li>
 <?php
 }
 elseif ($c)
 {
-?>					<li class="highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
-					<li><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li class="<?=(($_page == 'orders') ? 'selected' : '')?>"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
 <?php
 }
 elseif ($e)
 {
-?>					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li><a href="<?=WWW?>/orders/go">История заказов</a></li>
+?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/go">История заказов</a></li>
 <?php
 }
 else
 {
-?>					<li class="highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
 <?php
 }
 
 
-?>					<li><a href="<?=WWW?>/about">О проекте</a></li>
+?>					<li class="<?=(($_page == 'about') ? 'selected' : '')?>"><a href="<?=WWW?>/about">О проекте</a></li>
 				</ul>
 <?php
 

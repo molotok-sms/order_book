@@ -22,7 +22,6 @@ require_once('common/common.php');
 
 // Инициализация переменных
 $_controller = '';
-$_action = '';
 $_params = array();
 
 
