@@ -26,7 +26,7 @@ $(document).ready(function ()
 		if (err) return false;
 		
 		
-		form_ajax_submit({ form: this, action: '', data: { ajax: 1 }, error: '.error_string', callback: function (data)
+		form_ajax_submit({ form: this, action: '', data: { ajax: 1 }, error: '.error_string', xhrFields: { withCredentials: true }, callback: function (data)
 		{
 			if (data.toString().indexOf('redirect') >= 0)
 			{

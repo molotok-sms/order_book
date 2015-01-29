@@ -63,7 +63,7 @@ $(document).ready(function ()
 		}
 		
 		
-		form_ajax_submit({ form: this, data: { ajax: 1 }, error: '.error_string', content: '.main_frame', callback: function (data)
+		form_ajax_submit({ form: this, data: { ajax: 1 }, error: '.error_string', content: '.main_frame', xhrFields: { withCredentials: true }, callback: function (data)
 		{
 			window.scrollTo(0, 0);
 			

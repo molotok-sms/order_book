@@ -14,7 +14,7 @@ $(document).ready(function ()
 	{
 		e.preventDefault();
 		
-		form_ajax_submit({ form: this, data: { ajax: 1 }, error: '.error_string', content: '.main_frame', callback: function (data)
+		form_ajax_submit({ form: this, data: { ajax: 1 }, error: '.error_string', content: '.main_frame', xhrFields: { withCredentials: true }, callback: function (data)
 		{
 			window.scrollTo(0, 0);
 			
@@ -31,7 +31,7 @@ $(document).ready(function ()
 		d['ajax'] = 1;
 		d['register'] = 0;
 		
-		form_ajax_submit({ form: this, action: 'https://<?=(SITE_DOMAIN . WWW)?>/register', data: d, form_data: false, error: '.error_string', content: '.main_frame', callback: function (data)
+		form_ajax_submit({ form: this, action: 'https://<?=(SITE_DOMAIN . WWW)?>/register', data: d, form_data: false, error: '.error_string', content: '.main_frame', xhrFields: { withCredentials: true }, callback: function (data)
 		{
 			window.scrollTo(0, 0);
 			

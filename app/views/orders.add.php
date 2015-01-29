@@ -54,7 +54,7 @@ $(document).ready(function ()
 			window.scrollTo(0, 0);
 			
 			var title = document.title.replace(/^(.*) ::/, '');
-			history.replaceState('', title, '<?=WWW?>/orders');
+			history.replaceState({ title: title }, title, '<?=WWW?>/orders');
 			document.title = title;
 			
 		}});

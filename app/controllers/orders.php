@@ -8,8 +8,8 @@ function controller_orders ($params)
 	global $_user;
 	
 	
-	// Получение POST-параметров
-	$fajax = isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
+	// Получение параметров
+	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	
 	
 	// Инициализация фильтра списка заказов
@@ -154,7 +154,7 @@ function controller_orders_add ()
 	
 	
 	// Получение входных параметров
-	$fajax				= isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
+	$fajax				= isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	$faction			= isset($_POST['order_title']) ? true : false;
 	$order_title		= isset($_POST['order_title']) ? $_POST['order_title'] : '';
 	$order_description	= isset($_POST['order_description']) ? $_POST['order_description'] : '';
@@ -220,7 +220,7 @@ function controller_orders_item ($oid, $action='')
 	
 	
 	// Получение входных параметров
-	$fajax = isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
+	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	$fgo = ($action == 'go') ? true : false;
 	
 	
@@ -302,6 +302,11 @@ function controller_orders_my ()
 	global $_header_title;
 	global $_user;
 	
+	// Получение входных параметров
+	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
+	
+	// Если это AJAX-запрос, отключение вывода колонтитулов
+	if ($fajax) $_header = false;
 	
 	// Подключение представления
 	require(APP . '/views/orders.my.php');

@@ -1,4 +1,45 @@
 
+$(document).ready(function ()
+{
+	history.replaceState({ title: document.title }, document.title, location.href);
+	
+	$(document).on('click', 'a', function (e)
+	{
+		var title;
+		var url = this.href;
+		
+		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
+		
+		e.preventDefault();
+		
+		if (this.hasAttribute('data-title'))
+		{
+			title = (this['data-title'] ? this['data-title'].trim() : '');
+		}
+		else
+		{
+			title = this.innerText.trim();
+		}
+		
+		title = (title ? title + ' ::' : '') + document.title.replace(/^(.*) ::/, '');
+		
+		load_content(url, true, title);
+		
+	});
+	
+	$(window).on('popstate', function (e)
+	{
+		if (!e.originalEvent) return;
+		if (!e.originalEvent.state) return;
+		
+		document.title = e.originalEvent.state['title'];
+		load_content(location.href);
+		
+	});
+	
+});
+
+
 function get_form_data (form)
 {
 	if (typeof form === 'undefined') return false;
@@ -44,6 +85,7 @@ function form_ajax_submit (p)
 		data		- (optional) { data }, complements the form data
 		error		- (optional) selector
 		form_data	- (optional) boolean, true: (form data + data), false: data only, DEFAULT: true
+		xhrFields
 	*/
 	
 	if (typeof p !== 'object') return false;
@@ -92,11 +134,49 @@ function form_ajax_submit (p)
 		timeout: 15000,
 		type: 'POST',
 		url: (typeof p.action !== 'undefined') ? p.action : p.form.action,
-		xhrFields: { withCredentials: true }
+		xhrFields: p.xhrFields
 		
 	});
 	
 	return true;
+	
+}
+
+
+function load_content (url, push_history, title)
+{
+	$.ajax
+	({
+		data: { ajax: 1 },
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			console.log('Ошибка обращения к серверу!');
+			
+		},
+		success: function (data, textStatus, jqXHR)
+		{
+			if (textStatus != 'success')
+			{
+				console.log('Ошибка выполнения запроса!');
+				return;
+				
+			}
+			
+			$('.main_frame').html(data);
+			
+			if (push_history)
+			{
+				history.pushState({ title: title }, title, url);
+				document.title = title;
+				
+			}
+			
+		},
+		timeout: 15000,
+		type: 'GET',
+		url: url,
+		
+	});
 	
 }
 

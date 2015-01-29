@@ -18,7 +18,7 @@ function controller_auth ($params='')
 	$redirect = (is_array($params) && count($params)) ? array_shift($params) : '';
 	
 	// Получение POST-параметров
-	$fajax = isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
+	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	$flogin = isset($_POST['login']) ? true : false;
 	$login = isset($_POST['login']) ? $_POST['login'] : '';
 	$pass = isset($_POST['pass']) ? $_POST['pass'] : '';
@@ -140,6 +140,10 @@ function controller_auth ($params='')
 			// Формирование данных
 			$_data = array('status' => false, 'error' => $_auth_error, 'data' => array('login' => $login));
 			
+			
+			// Если это AJAX-запрос, отключение вывода колонтитулов
+			if ($fajax) $_header = false;
+			
 			// Подключение представления "вход на сайт"
 			require(APP . '/views/login.php');
 			
@@ -168,6 +172,10 @@ function controller_auth ($params='')
 		
 		// Формирование данных
 		$_data = array('status' => false, 'error' => $_auth_error, 'data' => array('login' => $_user['login']));
+		
+		
+		// Если это AJAX-запрос, отключение вывода колонтитулов
+		if ($fajax) $_header = false;
 		
 		// Подключение представления "вход на сайт"
 		require(APP . '/views/login.php');

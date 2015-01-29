@@ -64,7 +64,7 @@ if (UID)
 {
 	// Вывод кнопки выхода из пользователя
 ?>				<div class="login">
-					<a href="<?=WWW?>/logout" title="Выйти из пользователя">Выход: <?=$_user['name']?></a>
+					<a href="<?=WWW?>/logout/" title="Выйти из пользователя">Выход: <?=$_user['name']?></a>
 				</div>
 <?php
 	

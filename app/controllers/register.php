@@ -12,7 +12,7 @@ function controller_register ($params='')
 	$fconfirm = (is_array($params) && count($params)) ? true : false;
 	
 	// Получение POST-параметров
-	$fajax				= isset($_POST['ajax']) && $_POST['ajax'] ? true : false;
+	$fajax				= isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	$fdata				= isset($_POST['register']) && $_POST['register'] ? true : false;
 	$user_login			= isset($_POST['user_login']) ? $_POST['user_login'] : '';
 	$user_pass			= isset($_POST['user_pass']) ? $_POST['user_pass'] : '';
