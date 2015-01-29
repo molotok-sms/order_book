@@ -7,6 +7,7 @@ $(document).ready(function ()
 	{
 		var title;
 		var url = this.href;
+		var menu_item = ($(this).closest('.menu')) ? this.parentNode : false;
 		
 		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
 		
@@ -23,7 +24,7 @@ $(document).ready(function ()
 		
 		title = (title ? title + ' ::' : '') + document.title.replace(/^(.*) ::/, '');
 		
-		load_content(url, true, title);
+		load_content(url, true, title, menu_item);
 		
 	});
 	
@@ -143,7 +144,7 @@ function form_ajax_submit (p)
 }
 
 
-function load_content (url, push_history, title)
+function load_content (url, push_history, title, menu_item)
 {
 	$.ajax
 	({
@@ -168,6 +169,14 @@ function load_content (url, push_history, title)
 			{
 				history.pushState({ title: title }, title, url);
 				document.title = title;
+				
+			}
+			
+			console.log(menu_item);
+			if (menu_item)
+			{
+				$('.menu .selected').removeClass('selected');
+				$(menu_item).addClass('selected');
 				
 			}
 			
