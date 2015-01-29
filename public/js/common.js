@@ -5,11 +5,13 @@ $(document).ready(function ()
 	
 	$(document).on('click', 'a', function (e)
 	{
+		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
+		
+		var document_title = document.title.replace(/^(.*) ::/, '');
 		var title;
 		var url = this.href;
 		var menu_item = ($(this).closest('.menu')) ? this.parentNode : false;
 		
-		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
 		
 		e.preventDefault();
 		
@@ -22,7 +24,7 @@ $(document).ready(function ()
 			title = this.innerText.trim();
 		}
 		
-		title = (title ? title + ' ::' : '') + document.title.replace(/^(.*) ::/, '');
+		title = ((title && title != document_title) ? title + ' ::' : '') + document_title;
 		
 		load_content(url, true, title, menu_item);
 		
