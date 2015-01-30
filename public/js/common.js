@@ -176,7 +176,6 @@ function load_content (url, push_history, title, menu_item)
 				
 			}
 			
-			console.log(menu_item);
 			if (menu_item)
 			{
 				$('.menu .selected').removeClass('selected');
