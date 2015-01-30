@@ -5,15 +5,17 @@ $(document).ready(function ()
 	
 	$(document).on('click', 'a', function (e)
 	{
-		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
-		
-		var document_title = document.title.replace(/^(.*) ::/, '');
+		var document_title;
 		var title;
 		var url = this.href;
-		var menu_item = ($(this).closest('.menu')) ? this.parentNode : false;
+		var menu_item;
 		
+		if ((url.indexOf('/login/') >= 0) || (url.indexOf('/logout/') >= 0)) return;
 		
 		e.preventDefault();
+		
+		document_title = document.title.replace(/^(.*) ::/, '');
+		menu_item = ($(this).closest('.menu')) ? this.parentNode : false;
 		
 		if (this.hasAttribute('data-title'))
 		{
