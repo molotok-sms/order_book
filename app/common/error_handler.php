@@ -23,7 +23,7 @@ function error_handler ($err_num, $err_str, $err_file, $err_line, $err_context)
 function exception_handler ($exception)
 {
 	// Логирование ошибки
-	return print_log('error', 'Исключение: ' . $exception->getMessage());
+	return print_log('error', 'Исключение: ' . $exception->getMessage() . '" в строке №' . $exception->getLine() . ' файла "' . $exception->getFile() .'"');
 	
 }
 
