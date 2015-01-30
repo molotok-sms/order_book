@@ -3,8 +3,17 @@
 // Старт сессии пользователя
 session_start();
 
+// Проверка наличия конфигурационного файла сайта
+if (!file_exists(__DIR__ . '/config.php'))
+{
+	// Завершение выполнения с ошибкой
+	die('<div style="background-color:pink;border-radius:6px;margin:100 auto;padding:30;width:500;"><h1>Config file not found!</h1><h2>Please, copy "config.php.dist" and use it.</h2></div>');
+	
+}
+
 // Подключение конфигурационного файла сайта
 require_once('config.php');
+
 
 // Настройка локали
 setlocale(LC_ALL, LOCALE, LOCALE_ALT);
@@ -14,13 +23,13 @@ date_default_timezone_set('UTC');
 
 
 // Подключение библиотеки вспомогательных функций
-require_once(APP . '/common/funcs.php');
+require_once(__DIR__ . '/funcs.php');
 // Подключение обработчика ошибок и исключений
-require_once(APP . '/common/error_handler.php');
+require_once(__DIR__ . '/error_handler.php');
 
 
 // Подключение оболочки Базы Данных
-require_once(APP . '/common/db.php');
+require_once(__DIR__ . '/db.php');
 // Подключение к Базе Данных
 //db_connect(DB);
 
