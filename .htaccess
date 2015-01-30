@@ -4,5 +4,6 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	RewriteRule ^$ public/		[L]
+	RewriteRule ^favicon\.ico$ public/images/favicon.ico		[L,NC]
 	RewriteRule (.*) public/$1	[L]
 </IfModule>

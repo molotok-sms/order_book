@@ -79,11 +79,11 @@ if (file_exists(APP . '/controllers/' . $_controller . '.php'))
 }
 else
 {
-	// Вывод сообщения об ошибке в лог-файл
-	print_log('error', 'Not found controller "' . $_controller . '.php"');
-	
 	// Установка кода ошибка HTTP
 	http_response_code(500);
+	
+	// Вывод сообщения об ошибке в лог-файл
+	print_log('error', 'Not found controller "' . $_controller . '.php"');
 	
 	// Завершение выполнения скрипта
 	exit;
