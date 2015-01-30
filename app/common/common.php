@@ -12,10 +12,18 @@ setlocale(LC_ALL, '.' . CODEPAGE);
 // Настройка часового пояса по умолчанию
 date_default_timezone_set('UTC');
 
+
+// Подключение библиотеки вспомогательных функций
+require_once(APP . '/common/funcs.php');
+// Подключение обработчика ошибок и исключений
+require_once(APP . '/common/error_handler.php');
+
+
 // Подключение оболочки Базы Данных
 require_once(APP . '/common/db.php');
 // Подключение к Базе Данных
 //db_connect(DB);
+
 
 // Настройка кодировки страниц
 header('Content-type: text/html; charset=' . CODEPAGE);
@@ -23,10 +31,6 @@ header('Content-type: text/html; charset=' . CODEPAGE);
 header('Access-Control-Allow-Credentials: true');
 // Разрешение отправки HTTP-запросов (для отправки форм через HTTPS)
 header('Access-Control-Allow-Origin: http://' . SITE_DOMAIN);
-
-
-// Подключение библиотеки вспомогательных функций
-require_once(APP . '/common/funcs.php');
 
 
 ?>
