@@ -26,7 +26,7 @@ $(document).ready(function ()
 			title = this.innerText.trim();
 		}
 		
-		title = ((title && title != document_title) ? title + ' ::' : '') + document_title;
+		title = ((title && (title != document_title)) ? title + ' ::' : '') + document_title;
 		
 		load_content(url, true, title, menu_item);
 		

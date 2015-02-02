@@ -8,13 +8,6 @@ function controller_orders ($params)
 	global $_user;
 	
 	
-	// Получение параметров
-	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
-	
-	
-	// Инициализация фильтра списка заказов
-	$filter = false;
-	
 	// Инициализация параметров
 	if (!isset($params[0])) $params[0] = '';
 	if (!isset($params[1])) $params[1] = '';
@@ -36,11 +29,11 @@ function controller_orders ($params)
 		// Настройка адреса текущей страницы
 		$_page = 'orders/go';
 		
-		// Настраиваем фильтр "только выполненные мною заказы"
-		$filter = array('executor_uid' => UID);
-		
 		// Удаляем первый параметр
 		array_shift($params);
+		
+		// Вывод списка заказов (с фильтром "только выполненные мною заказы")
+		controller_orders_list($params, array('executor_uid' => UID));
 		
 	}
 	// Иначе, если запрошен конкретный заказ
@@ -48,18 +41,6 @@ function controller_orders ($params)
 	{
 		// Вызов обработчика просмотра заказа
 		controller_orders_item($params[1], $params[2]);
-		
-	}
-	// Иначе, если запрошен список заказов
-	elseif ($params[0] == 'list')
-	{
-		// Настройка заголовка страницы
-		$_header_title = '';
-		// Настройка адреса текущей страницы
-		$_page = 'orders';
-		
-		// Удаляем первый параметр
-		array_shift($params);
 		
 	}
 	// Иначе, если запрошена страница "Мои заказы"
@@ -70,77 +51,36 @@ function controller_orders ($params)
 		// Настройка адреса текущей страницы
 		$_page = 'orders/my';
 		
-		// Настраиваем фильтр "выводить только мои заказы"
-		$filter = array('customer_uid' => UID);
+		// Удаляем первый параметр
+		array_shift($params);
 		
+		// Вывод списка заказов (с фильтром "только мои заказы")
+		controller_orders_list($params, array('customer_uid' => UID));
+		
+	}
+	
+	
+	// Если явно запрошен список заказов
+	if ($params[0] == 'list')
+	{
 		// Удаляем первый параметр
 		array_shift($params);
 		
 	}
-	else
-	{
-		// Настройка заголовка страницы
-		$_header_title = '';
-		// Настройка адреса текущей страницы
-		$_page = 'orders';
-		
-	}
 	
 	
-	// Получение кол-ва заказов
-	$orders_count = orders_get_count();
-	$orders_count = $orders_count['result'];
-	// Получение кол-ва страниц
-	$page_count = ceil($orders_count / ORDERS_ON_PAGE);
+	//
+	// По умолчанию: вывод списка заказов
+	//
 	
-	// Подключение номера страницы
-	$page = (int) $params[0];
-	// Проверка на граничные значения
-	if ($page < 1) $page = 1;
-	if ($page > $page_count) $page = 1;
+	// Настройка заголовка страницы
+	$_header_title = '';
+	// Настройка адреса текущей страницы
+	$_page = 'orders';
 	
+	// Вывод списка заказов (без фильтра)
+	controller_orders_list($params);
 	
-	// Инициализация списка страниц
-	$lst_pages = array(1);
-	
-	// Перебор страниц ближайших к текущей (от -2 до +2)
-	for ($i = $page - 2; $i <= $page + 2; $i++)
-	{
-		// Если такая страница существует (без первой и последней)
-		if (($i > 1) && ($i < $page_count))
-		{
-			// Добавление страницы в список
-			$lst_pages[] = $i;
-			
-		}
-		
-	}
-	
-	// Если доступно больше одной страницы, добавление последней страницы
-	if ($page_count > 1) $lst_pages[] = $page_count;
-	
-	
-	// Инициализация данных
-	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array(), 'pages' => $lst_pages, 'page' => $page);
-	
-	// Получение списка заказов
-	$result = orders_get(false, $filter, ORDERS_ON_PAGE * ($page - 1), ORDERS_ON_PAGE);
-	
-	// Если выполнение запроса успешно
-	if (is_array($result['result']))
-	{
-		// Сохранение результата
-		$_data['status'] = true;
-		$_data['data'] = $result['result'];
-		
-	}
-	
-	
-	// Если это AJAX-запрос, отключение вывода колонтитулов
-	if ($fajax) $_header = false;
-	
-	// Подключение представления
-	require(APP . '/views/orders.list.php');
 	
 }
 
@@ -291,6 +231,72 @@ function controller_orders_item ($oid, $action='')
 	
 	// Завершение выполнения
 	exit;
+	
+}
+
+
+// Функция реализации просмотра списка заказов
+function controller_orders_list ($params, $filter=false)
+{
+	// Получение параметров
+	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
+	
+	
+	// Получение кол-ва заказов
+	$orders_count = orders_get_count();
+	$orders_count = $orders_count['result'];
+	// Получение кол-ва страниц
+	$page_count = ceil($orders_count / ORDERS_ON_PAGE);
+	
+	// Подключение номера страницы
+	$page = (int) $params[0];
+	// Проверка на граничные значения
+	if ($page < 1) $page = 1;
+	if ($page > $page_count) $page = 1;
+	
+	
+	// Инициализация списка страниц
+	$lst_pages = array(1);
+	
+	// Перебор страниц ближайших к текущей (от -2 до +2)
+	for ($i = $page - 2; $i <= $page + 2; $i++)
+	{
+		// Если такая страница существует (без первой и последней)
+		if (($i > 1) && ($i < $page_count))
+		{
+			// Добавление страницы в список
+			$lst_pages[] = $i;
+			
+		}
+		
+	}
+	
+	// Если доступно больше одной страницы, добавление последней страницы
+	if ($page_count > 1) $lst_pages[] = $page_count;
+	
+	
+	// Инициализация данных
+	$_data = array('status' => false, 'error' => '', 'error_field' => '', 'data' => array(), 'pages' => $lst_pages, 'page' => $page);
+	
+	// Получение списка заказов
+	$result = orders_get(false, $filter, ORDERS_ON_PAGE * ($page - 1), ORDERS_ON_PAGE);
+	
+	// Если выполнение запроса успешно
+	if (is_array($result['result']))
+	{
+		// Сохранение результата
+		$_data['status'] = true;
+		$_data['data'] = $result['result'];
+		
+	}
+	
+	
+	// Если это AJAX-запрос, отключение вывода колонтитулов
+	if ($fajax) $_header = false;
+	
+	// Подключение представления
+	require(APP . '/views/orders.list.php');
+	
 	
 }
 
