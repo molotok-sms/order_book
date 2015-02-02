@@ -73,11 +73,6 @@ function controller_orders ($params)
 	// По умолчанию: вывод списка заказов
 	//
 	
-	// Настройка заголовка страницы
-	$_header_title = '';
-	// Настройка адреса текущей страницы
-	$_page = 'orders';
-	
 	// Вывод списка заказов (без фильтра)
 	controller_orders_list($params);
 	
@@ -293,6 +288,11 @@ function controller_orders_list ($params, $filter=false)
 	
 	// Если это AJAX-запрос, отключение вывода колонтитулов
 	if ($fajax) $_header = false;
+	
+	// Настройка заголовка страницы
+	$_header_title = '';
+	// Настройка адреса текущей страницы
+	$_page = 'orders';
 	
 	// Подключение представления
 	require(APP . '/views/orders.list.php');
