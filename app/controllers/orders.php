@@ -233,6 +233,10 @@ function controller_orders_item ($oid, $action='')
 // Функция реализации просмотра списка заказов
 function controller_orders_list ($params, $filter=false)
 {
+	global $_header;
+	global $_header_title;
+	global $_user;
+	
 	// Получение параметров
 	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
 	
