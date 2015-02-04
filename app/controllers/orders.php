@@ -301,26 +301,6 @@ function controller_orders_list ($params, $filter=false)
 	// Подключение представления
 	require(APP . '/views/orders.list.php');
 	
-	
-}
-
-
-// Функция реализации просмотра своих заказов
-function controller_orders_my ()
-{
-	global $_header;
-	global $_header_title;
-	global $_user;
-	
-	// Получение входных параметров
-	$fajax = isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ? true : false;
-	
-	// Если это AJAX-запрос, отключение вывода колонтитулов
-	if ($fajax) $_header = false;
-	
-	// Подключение представления
-	require(APP . '/views/orders.my.php');
-	
 	// Завершение выполнения
 	exit;
 	
