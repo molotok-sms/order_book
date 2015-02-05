@@ -55,7 +55,7 @@ function orders_get ($oid=false, $filter=false, $limit_offset=0, $limit_count=OR
 	$db_orders = db_connect(ORDERS_DB, false, true);
 	$db_users = db_connect(USERS_DB, false, true);
 	
-	// Если запрошена информация о конкретном пользователе
+	// Если запрошена информация о конкретном заказе
 	if (is_numeric($oid) && ($oid > 0))
 	{
 		// Если подключения к базе данных совпадает
