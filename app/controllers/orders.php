@@ -14,57 +14,141 @@ function controller_orders ($params)
 	if (!isset($params[2])) $params[2] = '';
 	
 	
+	// Инициализация адреса вызываемой страницы
+	// (будет использоваться и в views/header.php)
+	$_page = '';
+	
+	
 	// Если запрошена страница "Разместить заказ"
 	if ($params[0] == 'add')
+	{
+		// Если пользователь имеет полномочия
+		if (UID && $_user && $_user['customer'])
+		{
+			// Запоминание вызываемой страницы
+			$_page = 'orders/add';
+			
+			// Удаление первого параметра
+			array_shift($params);
+			
+		}
+		else
+		{
+			// Очищение параметров
+			// (для страницы orders/list они могут быть некорректны)
+			$params = array();
+			
+		}
+		
+	}
+	// Иначе, если запрошена страница "Выполненные заказы"
+	elseif ($params[0] == 'go')
+	{
+		// Если пользователь имеет полномочия
+		if (UID && $_user && $_user['executor'])
+		{
+			// Запоминание вызываемой страницы
+			$_page = 'orders/go';
+			
+			// Удаление первого параметра
+			array_shift($params);
+			
+		}
+		else
+		{
+			// Очищение параметров
+			// (для страницы orders/list они могут быть некорректны)
+			$params = array();
+			
+		}
+		
+	}
+	// Иначе, если запрошен конкретный заказ
+	elseif (($params[0] == 'item') && is_numeric($params[1]) && ($params[1] > 0))
+	{
+		// Запоминание вызываемой страницы
+		$_page = 'orders/item';
+		
+		// Удаление первого параметра
+		array_shift($params);
+		
+	}
+	// Иначе, если запрошена страница "Мои заказы"
+	elseif ($params[0] == 'my')
+	{
+		// Если пользователь имеет полномочия
+		if (UID && $_user && $_user['customer'])
+		{
+			// Запоминание вызываемой страницы
+			$_page = 'orders/my';
+			
+			// Удаление первого параметра
+			array_shift($params);
+			
+		}
+		else
+		{
+			// Очищение параметров
+			// (для страницы orders/list они могут быть некорректны)
+			$params = array();
+			
+		}
+		
+	}
+	// Иначе, если явно запрошен список заказов
+	elseif ($params[0] == 'list')
+	{
+		// Запоминание вызываемой страницы
+		$_page = 'orders';
+		
+		// Удаление первого параметра
+		array_shift($params);
+		
+	}
+	else
+	{
+		// Запоминание вызываемой страницы
+		$_page = 'orders';
+		
+	}
+	
+	
+	
+	// Если запрошена страница "Разместить заказ"
+	if ($_page == 'orders/add')
 	{
 		// Вызов обработчика размещения заказа
 		controller_orders_add();
 		
 	}
 	// Иначе, если запрошена страница "Выполненные заказы"
-	elseif ($params[0] == 'go')
+	elseif ($_page == 'orders/go')
 	{
 		// Настройка заголовка страницы
 		$_header_title = 'История заказов';
-		// Настройка адреса текущей страницы
-		$_page = 'orders/go';
-		
-		// Удаляем первый параметр
-		array_shift($params);
 		
 		// Вывод списка заказов (с фильтром "только выполненные мною заказы")
 		controller_orders_list($params, array('executor_uid' => UID));
 		
 	}
 	// Иначе, если запрошен конкретный заказ
-	elseif (($params[0] == 'item') && is_numeric($params[1]) && ($params[1] > 0))
+	elseif ($_page == 'orders/item')
 	{
+		// Если дополнительный параметр не указан, инициализация
+		if (!isset($params[1])) $params[1] = '';
+		
 		// Вызов обработчика просмотра заказа
-		controller_orders_item($params[1], $params[2]);
+		controller_orders_item($params[0], $params[1]);
 		
 	}
 	// Иначе, если запрошена страница "Мои заказы"
-	elseif ($params[0] == 'my')
+	elseif ($_page == 'orders/my')
 	{
 		// Настройка заголовка страницы
 		$_header_title = 'Мои заказы';
-		// Настройка адреса текущей страницы
-		$_page = 'orders/my';
-		
-		// Удаляем первый параметр
-		array_shift($params);
 		
 		// Вывод списка заказов (с фильтром "только мои заказы")
 		controller_orders_list($params, array('customer_uid' => UID));
-		
-	}
-	
-	
-	// Если явно запрошен список заказов
-	if ($params[0] == 'list')
-	{
-		// Удаляем первый параметр
-		array_shift($params);
 		
 	}
 	
@@ -247,8 +331,8 @@ function controller_orders_list ($params, $filter=false)
 	// Получение кол-ва страниц
 	$page_count = ceil($orders_count / ORDERS_ON_PAGE);
 	
-	// Подключение номера страницы
-	$page = (int) $params[0];
+	// Получение номера страницы
+	$page = isset($params[0]) ? (int) $params[0] : 1;
 	// Проверка на граничные значения
 	if ($page < 1) $page = 1;
 	if ($page > $page_count) $page = 1;

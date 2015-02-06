@@ -29,33 +29,33 @@ if (!isset($_page)) $_page = '';
 
 if ($c && $e)
 {
-?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
-					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
-					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/go">История заказов</a></li>
+?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a data-page="orders/add" href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a data-page="orders" href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a data-page="orders/my" href="<?=WWW?>/orders/my">Мои заказы</a></li>
+					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a data-page="orders/go" href="<?=WWW?>/orders/go">История заказов</a></li>
 <?php
 }
 elseif ($c)
 {
-?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders/add">Разместить заказ</a></li>
-					<li class="<?=(($_page == 'orders') ? 'selected' : '')?>"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/my">Мои заказы</a></li>
+?>					<li class="<?=(($_page == 'orders/add') ? 'selected' : '')?> highlight"><a data-page="orders/add" href="<?=WWW?>/orders/add">Разместить заказ</a></li>
+					<li class="<?=(($_page == 'orders') ? 'selected' : '')?>"><a data-page="orders" href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/my') ? 'selected' : '')?>"><a data-page="orders/my" href="<?=WWW?>/orders/my">Мои заказы</a></li>
 <?php
 }
 elseif ($e)
 {
-?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
-					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a href="<?=WWW?>/orders/go">История заказов</a></li>
+?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a data-page="orders" href="<?=WWW?>/orders">Просмотр заказов</a></li>
+					<li class="<?=(($_page == 'orders/go') ? 'selected' : '')?>"><a data-page="orders/go" href="<?=WWW?>/orders/go">История заказов</a></li>
 <?php
 }
 else
 {
-?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a href="<?=WWW?>/orders">Просмотр заказов</a></li>
+?>					<li class="<?=(($_page == 'orders') ? 'selected' : '')?> highlight"><a data-page="orders" href="<?=WWW?>/orders">Просмотр заказов</a></li>
 <?php
 }
 
 
-?>					<li class="<?=(($_page == 'about') ? 'selected' : '')?>"><a href="<?=WWW?>/about">О проекте</a></li>
+?>					<li class="<?=(($_page == 'about') ? 'selected' : '')?>"><a data-page="about" href="<?=WWW?>/about">О проекте</a></li>
 				</ul>
 <?php
 

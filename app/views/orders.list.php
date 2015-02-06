@@ -62,14 +62,14 @@ else
 		if ($_data['pages'][$i] == $_data['page'])
 		{
 			// Вывод номера текущей страницы
-?>	<div class="page current"><a data-title="" href="#"><?=$_data['pages'][$i]?></a></div>
+?>	<div class="page current"><a data-page="<?=$_page?>" data-title="" href="#"><?=$_data['pages'][$i]?></a></div>
 <?php
 			
 		}
 		else
 		{
 			// Вывод ссылки на страницу
-?>	<div class="page"><a data-title="" href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
+?>	<div class="page"><a data-page="<?=$_page?>" data-title="" href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
 <?php
 			
 		}
@@ -136,14 +136,14 @@ else
 		if ($_data['pages'][$i] == $_data['page'])
 		{
 			// Вывод номера текущей страницы
-?>	<div class="page current"><a data-title="" href="#"><?=$_data['pages'][$i]?></a></div>
+?>	<div class="page current"><a data-page="<?=$_page?>" data-title="" href="#"><?=$_data['pages'][$i]?></a></div>
 <?php
 			
 		}
 		else
 		{
 			// Вывод ссылки на страницу
-?>	<div class="page"><a data-title="" href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
+?>	<div class="page"><a data-page="<?=$_page?>" data-title="" href="<?=WWW?>/orders/<?=$_data['pages'][$i]?>" title="Перейти на страницу"><?=$_data['pages'][$i]?></a></div>
 <?php
 			
 		}

@@ -15,7 +15,16 @@ $(document).ready(function ()
 		e.preventDefault();
 		
 		document_title = document.title.replace(/^(.*) ::/, '');
-		menu_item = ($(this).closest('.menu')) ? this.parentNode : false;
+		
+		if ($(this).closest('.menu').length)
+		{
+			menu_item = this.parentNode;
+		}
+		else if (this.hasAttribute('data-page'))
+		{
+			menu_item = $('.menu a[data-page=' + this.getAttribute('data-page') + ']').get(0).parentNode;
+		}
+		else menu_item = false;
 		
 		if (this.hasAttribute('data-title'))
 		{
